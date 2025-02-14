@@ -1,0 +1,24 @@
+/* Custom Scrollbar for Webkit Browsers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d7d719; /* Color of the thumb (yellow) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ffff00; /* Color of the thumb on hover (brighter yellow) */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Width of the scrollbar */
+  scrollbar-color: #ffff00 #f1f1f1; /* Thumb and track color */
+}

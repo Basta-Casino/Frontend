@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset default margins, paddings, and box-sizing */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure body takes full viewport height */
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif; /* Changed to Poppins */
+  background-color: #001333; /* Adjust based on your design */
+  scroll-behavior: smooth;
+}
+
+/* Remove default list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* Remove default button styles */
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+/* Reset input & textarea styles */
+input, textarea {
+  all: unset;
+  width: 100%;
+  font: inherit;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Ensure images and videos are responsive */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove outline for better UI, but keep focus-visible for accessibility */
+button:focus,
+input:focus,
+textarea:focus,
+a:focus {
+  outline: none;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #007bff; /* Adjust color */
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Prevent text selection where needed */
+.no-select {
+  user-select: none;
+}
+
+/* Hide scrollbar but allow scrolling */
+/* ::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+} */
+
+/* Optional: Improve typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.6;
+}
