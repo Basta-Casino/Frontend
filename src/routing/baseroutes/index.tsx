@@ -1,5 +1,4 @@
 import CheckEmail from "../../layouts/AppWrapper/CheckEmail";
-import Footer from "../../layouts/AppWrapper/Footer";
 import PasswordReset from "../../layouts/AppWrapper/Passwordreset";
 import PasswordResetNew from "../../layouts/AppWrapper/PasswordresetNew";
 import PasswordResetScreen from "../../layouts/AppWrapper/PasswordResetScreen";
@@ -15,7 +14,6 @@ export const route1 = [
     element: (
       <>
         <HomePage />
-        <Footer />
       </>
     ),
     label: "Home",

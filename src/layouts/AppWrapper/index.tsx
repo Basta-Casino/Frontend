@@ -3,6 +3,8 @@ import { Outlet, useLocation } from "react-router-dom"; // Import useLocation
 import Sidebar from "../../components/app/sidebar/Sidebar";
 import Navbar from "../../components/common/Navbar";
 import Footer from "./Footer";
+import CasinoBanner from "./CasinoBanner";
+import SearchNavbar from "./SearchNavbar";
 
 const AppWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -54,6 +56,8 @@ const AppWrapper = () => {
           }}
         >
           <Outlet />
+          <CasinoBanner />
+          <SearchNavbar />
         </Box>
       </Stack>
 
