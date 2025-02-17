@@ -144,9 +144,6 @@ const Footer: React.FC = () => {
           </Box>
         </Box>
       </Container>
-      <PasswordReset />
-      <CheckEmail />
-      <PasswordResetScreen />
     </Box>
   );
 };

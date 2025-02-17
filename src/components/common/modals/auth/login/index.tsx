@@ -26,7 +26,6 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showReset, setShowReset] = useState(false);
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
@@ -68,138 +67,95 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           <CloseIcon />
         </IconButton>
 
-        {showReset ? (
-          <>
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-              align="left"
-              gutterBottom
-            >
-              PASSWORD RESET
-            </Typography>
-            <Typography variant="body1" align="left">
-              PHONE OR EMAIL
-            </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Phone Number or Email"
+        <Typography variant="body1" align="left" marginBottom={1}>
+          PHONE NUMBER OR EMAIL
+        </Typography>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="PHONE NUMBER OR EMAIL"
+          sx={{ marginBottom: "12px" }}
+        />
+        <Typography variant="body1" align="left" marginBottom={1}>
+          PASSWORD
+        </Typography>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Password"
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  sx={{ color: "white" }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <FormControlLabel
+            control={<Checkbox sx={{ color: "white" }} />}
+            label={<Typography sx={{ color: "white" }}>Remember Me</Typography>}
+          />
+          <Typography
+            color="yellow"
+            sx={{ cursor: "pointer" }}
+            onClick={() => {
+              onClose(); // Close the modal first
+              navigate("/reset-password"); // Then navigate
+            }}
+          >
+            Forgot Password?
+          </Typography>
+        </Box>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 2,
+            mb: 2,
+            background: "linear-gradient(to right, #d32f2f, #ff0000)",
+            color: "white",
+            fontWeight: "bold",
+            borderRadius: 6,
+          }}
+          onClick={onClose}
+        >
+          LOG IN
+        </Button>
+        <Box display="flex" justifyContent="center" gap={2} mt={2}>
+          <IconButton>
+            <Avatar
+              src={facebookIcon}
+              alt="Facebook"
+              sx={{ width: 24, height: 24 }}
             />
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 2,
-                background: "linear-gradient(to right, #d32f2f, #ff0000)",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: 6,
-              }}
-            >
-              RESET PASSWORD
-            </Button>
-            <Typography
-              variant="body2"
-              sx={{ mt: 2, cursor: "pointer", color: "yellow" }}
-              onClick={() => setShowReset(false)}
-            >
-              Back to Login
-            </Typography>
-          </>
-        ) : (
-          <>
-            <Typography variant="body1" align="left" marginBottom={1}>
-              PHONE NUMBER OR EMAIL
-            </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="PHONE NUMBER OR EMAIL"
-              sx={{ marginBottom: "12px" }}
+          </IconButton>
+          <IconButton>
+            <Avatar
+              src={googleIcon}
+              alt="Google"
+              sx={{ width: 24, height: 24 }}
             />
-            <Typography variant="body1" align="left" marginBottom={1}>
-              PASSWORD
-            </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Password"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={handleClickShowPassword}
-                      sx={{ color: "white" }}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <FormControlLabel
-                control={<Checkbox sx={{ color: "white" }} />}
-                label={
-                  <Typography sx={{ color: "white" }}>Remember Me</Typography>
-                }
-              />
-              <Typography
-                color="yellow"
-                sx={{ cursor: "pointer" }}
-                onClick={() => setShowReset(true)}
-              >
-                Forgot Password?
-              </Typography>
-            </Box>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 2,
-                mb: 2,
-                background: "linear-gradient(to right, #d32f2f, #ff0000)",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: 6,
-              }}
-              onClick={onClose}
-            >
-              LOG IN
-            </Button>
-            <Box display="flex" justifyContent="center" gap={2} mt={2}>
-              <IconButton>
-                <Avatar
-                  src={facebookIcon}
-                  alt="Facebook"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </IconButton>
-              <IconButton>
-                <Avatar
-                  src={googleIcon}
-                  alt="Google"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </IconButton>
-            </Box>
-            <Typography mt={2} color="gray">
-              DON'T HAVE AN ACCOUNT?{" "}
-              <span
-                style={{ color: "yellow", cursor: "pointer" }}
-                onClick={() => navigate("/register")}
-              >
-                REGISTER
-              </span>
-            </Typography>
-          </>
-        )}
+          </IconButton>
+        </Box>
+        <Typography mt={2} color="gray">
+          DON'T HAVE AN ACCOUNT?{" "}
+          <span
+            style={{ color: "yellow", cursor: "pointer" }}
+            onClick={() => {
+              onClose(); // Close the modal first
+              navigate("/register"); // Then navigate
+            }}
+          >
+            REGISTER
+          </span>
+        </Typography>
       </Box>
     </Modal>
   );

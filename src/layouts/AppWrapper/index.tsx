@@ -1,12 +1,15 @@
 import { Box, Stack, useMediaQuery } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom"; // Import useLocation
 import Sidebar from "../../components/app/sidebar/Sidebar";
 import Navbar from "../../components/common/Navbar";
 import Footer from "./Footer";
-// import BottomBar from "./BottomBar";
 
 const AppWrapper = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Adjust breakpoint as needed
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const location = useLocation(); // Get the current route
+
+  const hideSidebarRoutes = ["/register"]; // Add any routes where you don't want the sidebar
+  const shouldShowSidebar = !hideSidebarRoutes.includes(location.pathname);
 
   return (
     <Box
@@ -35,7 +38,7 @@ const AppWrapper = () => {
 
       {/* Sidebar + Main Content */}
       <Stack direction="row" sx={{ flex: 1, marginTop: "64px", width: "100%" }}>
-        {!isMobile && (
+        {!isMobile && shouldShowSidebar && (
           <Box>
             <Sidebar />
           </Box>
@@ -53,9 +56,6 @@ const AppWrapper = () => {
           <Outlet />
         </Box>
       </Stack>
-
-      {/* Bottom Bar for Mobile */}
-      {/* {isMobile && <BottomBar />} */}
 
       <Footer />
     </Box>

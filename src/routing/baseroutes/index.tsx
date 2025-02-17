@@ -1,4 +1,8 @@
+import CheckEmail from "../../layouts/AppWrapper/CheckEmail";
 import Footer from "../../layouts/AppWrapper/Footer";
+import PasswordReset from "../../layouts/AppWrapper/Passwordreset";
+import PasswordResetNew from "../../layouts/AppWrapper/PasswordresetNew";
+import PasswordResetScreen from "../../layouts/AppWrapper/PasswordResetScreen";
 import RegistrationPage from "../../layouts/AppWrapper/RegistrationForm";
 import lazyLoad from "../../layouts/lazyLoader";
 
@@ -17,6 +21,23 @@ export const route1 = [
     label: "Home",
   },
   { path: "register", element: <RegistrationPage />, label: "Register" },
+  {
+    path: "reset-password",
+    element: <PasswordReset />,
+    label: "reset-password",
+  },
+  { path: "check-email", element: <CheckEmail />, label: "check-email" },
+  {
+    path: "password-reset-screen",
+    element: <PasswordResetScreen />,
+    label: "PasswordResetScreen",
+  },
+  {
+    path: "reset-new-password",
+    element: <PasswordResetNew />,
+    label: "reset-new-password",
+  },
+
   { path: "slots", element: <>slotes</>, label: "Slotes" },
   { path: "live-games", element: <>live games</>, label: "Live Games" },
   { path: "tables", element: <>tables</>, label: "Tables" },

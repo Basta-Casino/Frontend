@@ -1,7 +1,17 @@
-import React from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const PasswordReset: React.FC = () => {
+const PasswordResetNew: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <Box
       sx={{
@@ -10,6 +20,7 @@ const PasswordReset: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
+        backgroundColor: "#0a1128",
       }}
     >
       <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
@@ -27,13 +38,32 @@ const PasswordReset: React.FC = () => {
         }}
       >
         <Typography variant="body2" color="white" mb={1}>
-          PHONE OR EMAIL
+          NEW PASSWORD
         </Typography>
         <TextField
           fullWidth
+          type={showPassword ? "text" : "password"}
           variant="outlined"
           sx={{
             mb: 2,
+          }}
+          slotProps={{
+            input: {
+              style: { color: "white" }, // Correct way to set input text color
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                  sx={{ color: "white" }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
         />
         <Button
@@ -56,4 +86,4 @@ const PasswordReset: React.FC = () => {
   );
 };
 
-export default PasswordReset;
+export default PasswordResetNew;

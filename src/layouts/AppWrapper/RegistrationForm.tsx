@@ -76,8 +76,8 @@ const RegistrationPage: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        width: "100vw",
+        height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -97,10 +97,9 @@ const RegistrationPage: React.FC = () => {
           p: 3,
           position: "absolute",
           top: "40%",
-          left: "46%",
+          left: "50%",
           transform: "translate(-50%, -50%)",
           color: "white",
-          boxShadow: 24,
           borderRadius: "16px",
           textAlign: "center",
         }}
