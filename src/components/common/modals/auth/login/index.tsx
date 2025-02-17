@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -11,6 +11,8 @@ import {
   IconButton,
   Backdrop,
   Avatar,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -18,17 +20,81 @@ import facebookIcon from "../../../../../assets/logo-icons/facebook-icon.svg";
 import googleIcon from "../../../../../assets/logo-icons/google-icon.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../../../../../constants/api";
 interface LoginModalProps {
   open: boolean;
   onClose: () => void;
 }
 
+
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: "", isError: false });
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+
+  const handleGoogleLogin = () => {
+    // Store the current URL before redirecting
+    sessionStorage.setItem('redirectUrl', window.location.href);
+    window.location.href = `${API_URL}/google`;
+  };
+
+  const handleFacebookLogin = () => {
+    // Store the current URL before redirecting
+    sessionStorage.setItem('redirectUrl', window.location.href);
+    window.location.href = `${API_URL}/facebook`;
+  };
+
+  // Handle OAuth callback
+  useEffect(() => {
+    const handleOAuthCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const error = urlParams.get('error');
+
+      if (error) {
+        setNotification({
+          show: true,
+          message: decodeURIComponent(error),
+          isError: true
+        });
+        return;
+      }
+
+      if (token) {
+        try {
+          // Store the token
+          localStorage.setItem('token', token);
+          
+          // Show success notification
+          setNotification({
+            show: true,
+            message: "Login successful!",
+            isError: false
+          });
+
+          // Close the modal
+          onClose();
+
+          // Redirect back to the stored URL
+          const redirectUrl = sessionStorage.getItem('redirectUrl');
+          if (redirectUrl) {
+            sessionStorage.removeItem('redirectUrl');
+            window.location.href = redirectUrl;
+          }
+        } catch (error) {
+          setNotification({
+            show: true,
+            message: "An error occurred during login",
+            isError: true
+          });
+        }
+      }
+    };
+
+    handleOAuthCallback();
+  }, [onClose]);
 
   return (
     <Modal
@@ -60,6 +126,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           color: "white",
         }}
       >
+        <Snackbar
+          open={notification.show}
+          autoHideDuration={6000}
+          onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+        >
+          <Alert 
+            severity={notification.isError ? "error" : "success"}
+            onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+          >
+            {notification.message}
+          </Alert>
+        </Snackbar>
+
         <IconButton
           onClick={onClose}
           sx={{ position: "absolute", top: 10, right: 10, color: "white" }}
@@ -106,8 +185,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             color="yellow"
             sx={{ cursor: "pointer" }}
             onClick={() => {
-              onClose(); // Close the modal first
-              navigate("/reset-password"); // Then navigate
+              onClose();
+              navigate("/reset-password");
             }}
           >
             Forgot Password?
@@ -129,14 +208,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           LOG IN
         </Button>
         <Box display="flex" justifyContent="center" gap={2} mt={2}>
-          <IconButton>
+          <IconButton onClick={handleFacebookLogin}>
             <Avatar
               src={facebookIcon}
               alt="Facebook"
               sx={{ width: 24, height: 24 }}
             />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleGoogleLogin}>
             <Avatar
               src={googleIcon}
               alt="Google"
@@ -149,8 +228,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           <span
             style={{ color: "yellow", cursor: "pointer" }}
             onClick={() => {
-              onClose(); // Close the modal first
-              navigate("/register"); // Then navigate
+              onClose();
+              navigate("/register");
             }}
           >
             REGISTER
