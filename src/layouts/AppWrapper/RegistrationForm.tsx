@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { API_URL } from "../../constants/api.ts";
 import { Currency } from "../../constants/currencies.ts";
 import ThankYouModal from "../../components/common/modals/auth/login/ThankyouModal";
+import { SelectChangeEvent } from "@mui/material";
 import {
   Box,
   Typography,
@@ -46,6 +47,12 @@ const RegistrationPage: React.FC = () => {
   const [notification, setNotification] = useState({ show: false, message: "", isError: false });
   const [showThankYouModal, setShowThankYouModal] = useState(false);
 
+  const handleCurrencyChange = (event: SelectChangeEvent<Currency>) => {
+    setFormData((prev) => ({
+      ...prev,
+      currency: event.target.value as Currency,
+    }));
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
   ) => {
@@ -325,7 +332,7 @@ const RegistrationPage: React.FC = () => {
               <Select
                 value={formData.currency}
                 name="currency"
-                onChange={handleChange}
+                onChange={handleCurrencyChange}
                 sx={{
                   borderRadius: 6,
                   backgroundColor: "#051737",
