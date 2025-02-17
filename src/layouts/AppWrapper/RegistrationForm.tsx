@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { API_URL } from "../../constants/api.ts";
+import { Currency } from "../../constants/currencies.ts";
+import ThankYouModal from "../../components/common/modals/auth/login/ThankyouModal";
 import {
   Box,
   Typography,
@@ -11,65 +14,141 @@ import {
   Button,
   IconButton,
   InputAdornment,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Gamesbg from "../../assets/games-bg.png";
 
+interface FormData {
+  email?: string;
+  phone_number?: string;
+  password: string;
+  currency: Currency;
+  agreedToTerms: boolean;
+}
+
+interface FormErrors {
+  contact?: string;
+  password?: string;
+}
+
 const RegistrationPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: "",
+  const [formData, setFormData] = useState<FormData>({
     password: "",
-    currency: "USD",
+    currency: Currency.USD,
     agreedToTerms: false,
   });
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: "", isError: false });
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name!]: value,
+    }));
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const updatedForm: FormData = {
+      ...formData,
+      email: undefined,
+      phone_number: undefined,
+    };
+
+    const isEmail = value.includes("@");
+    if (isEmail) {
+      updatedForm.email = value;
+    } else {
+      updatedForm.phone_number = value;
+    }
+
+    setFormData(updatedForm);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, agreedToTerms: e.target.checked });
+    setFormData((prev) => ({
+      ...prev,
+      agreedToTerms: e.target.checked,
+    }));
   };
 
-  const validate = () => {
-    let tempErrors = { email: "", password: "" };
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
     let isValid = true;
 
-    if (!formData.email) {
-      tempErrors.email = "Email is required";
+    if (!formData.email && !formData.phone_number) {
+      newErrors.contact = "Email or phone number is required";
       isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      tempErrors.email = "Enter a valid email address";
+    } else if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.contact = "Enter a valid email address";
+      isValid = false;
+    } else if (formData.phone_number && !/^\+?[1-9]\d{1,14}$/.test(formData.phone_number)) {
+      newErrors.contact = "Enter a valid phone number";
       isValid = false;
     }
 
     if (!formData.password) {
-      tempErrors.password = "Password is required";
+      newErrors.password = "Password is required";
       isValid = false;
-    } else if (formData.password.length < 6) {
-      tempErrors.password = "Password must be at least 6 characters";
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) {
+      newErrors.password = "Password must contain uppercase, lowercase, number, and special character";
       isValid = false;
     }
 
-    setErrors(tempErrors);
+    setErrors(newErrors);
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.agreedToTerms) {
+      setNotification({
+        show: true,
+        message: "Please agree to the terms and conditions",
+        isError: true
+      });
+      return;
+    }
+
     if (validate()) {
-      alert("Registration Successful!");
-      console.log("Form Data Submitted:", formData);
+      try {
+        const response = await fetch(`${API_URL}/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setShowThankYouModal(true);
+          localStorage.setItem('token', data.data.token);
+        } else {
+          setNotification({
+            show: true,
+            message: data.error || "Registration failed",
+            isError: true
+          });
+        }
+      } catch (error) {
+        setNotification({
+          show: true,
+          message: "An error occurred during registration",
+          isError: true
+        });
+      }
     }
   };
 
@@ -88,6 +167,19 @@ const RegistrationPage: React.FC = () => {
         position: "relative",
       }}
     >
+      <Snackbar
+        open={notification.show}
+        autoHideDuration={6000}
+        onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+      >
+        <Alert 
+          severity={notification.isError ? "error" : "success"}
+          onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
+
       <Box
         sx={{
           width: "100%",
@@ -112,10 +204,9 @@ const RegistrationPage: React.FC = () => {
           variant="body2"
           sx={{ textAlign: "center", mb: 2, color: "white" }}
         >
-          Register now to unlock exclusive features and a personalized
-          experience!
+          Register now to unlock exclusive features and a personalized experience!
         </Typography>
-        {/* Bonus Boxes */}
+
         <Box
           sx={{
             display: "flex",
@@ -125,7 +216,7 @@ const RegistrationPage: React.FC = () => {
         >
           {["10% CASHBACK", "100% OF THE DEPOSIT", "100% FREE SPINS"].map(
             (text, index) => {
-              const match = text.match(/(\d+)(%?)(.*)/); // Extract number, %, and remaining text
+              const match = text.match(/(\d+)(%?)(.*)/);
               const number = match ? match[1] : "";
               const percentage = match ? match[2] : "";
               const label = match ? match[3] : "";
@@ -142,6 +233,7 @@ const RegistrationPage: React.FC = () => {
                     minWidth: "120px",
                     boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                     color: "#FFF",
+                    marginBottom:"16px"
                   }}
                 >
                   <Typography
@@ -174,7 +266,6 @@ const RegistrationPage: React.FC = () => {
             }
           )}
         </Box>
-        ;
         <Box
           sx={{
             width: "100%",
@@ -189,24 +280,20 @@ const RegistrationPage: React.FC = () => {
             border: "2px solid #FF3366",
           }}
         >
-          {/* Registration Form */}
           <form onSubmit={handleSubmit}>
-            {/* Email Input */}
             <TextField
               fullWidth
               variant="outlined"
               placeholder="Phone Number or Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
+              name="contact"
+              onChange={handleContactChange}
+              error={!!errors.contact}
+              helperText={errors.contact}
               sx={{
                 mb: 2,
               }}
             />
 
-            {/* Password Input */}
             <TextField
               fullWidth
               variant="outlined"
@@ -234,7 +321,6 @@ const RegistrationPage: React.FC = () => {
               }}
             />
 
-            {/* Currency Dropdown */}
             <FormControl fullWidth sx={{ mb: 2 }}>
               <Select
                 value={formData.currency}
@@ -246,13 +332,12 @@ const RegistrationPage: React.FC = () => {
                   color: "white",
                 }}
               >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="EUR">EUR</MenuItem>
-                <MenuItem value="INR">INR</MenuItem>
+                <MenuItem value={Currency.USD}>USD</MenuItem>
+                <MenuItem value={Currency.EUR}>EUR</MenuItem>
+                <MenuItem value={Currency.INR}>INR</MenuItem>
               </Select>
             </FormControl>
 
-            {/* Terms & Conditions Checkbox */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -268,7 +353,6 @@ const RegistrationPage: React.FC = () => {
               }
             />
 
-            {/* Register Button */}
             <Button
               fullWidth
               type="submit"
@@ -286,6 +370,10 @@ const RegistrationPage: React.FC = () => {
           </form>
         </Box>
       </Box>
+      <ThankYouModal 
+        open={showThankYouModal} 
+        onClose={() => setShowThankYouModal(false)} 
+      />
     </Box>
   );
 };
