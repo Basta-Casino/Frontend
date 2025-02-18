@@ -37,7 +37,7 @@ const Navbar = () => {
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         {/* Logo */}
-        <Link to="/">
+        <Link to="/home">
           <Box
             component="img"
             src={logo}

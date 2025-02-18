@@ -5,6 +5,7 @@ import Navbar from "../../components/common/Navbar";
 import Footer from "./Footer";
 import CasinoBanner from "./CasinoBanner";
 import SearchNavbar from "./SearchNavbar";
+import GameCardList from "./GameCardList";
 
 const AppWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -56,8 +57,6 @@ const AppWrapper = () => {
           }}
         >
           <Outlet />
-          <CasinoBanner />
-          <SearchNavbar />
         </Box>
       </Stack>
 

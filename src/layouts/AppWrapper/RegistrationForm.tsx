@@ -44,7 +44,11 @@ const RegistrationPage: React.FC = () => {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
-  const [notification, setNotification] = useState({ show: false, message: "", isError: false });
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    isError: false,
+  });
   const [showThankYouModal, setShowThankYouModal] = useState(false);
 
   const handleCurrencyChange = (event: SelectChangeEvent<Currency>) => {
@@ -98,7 +102,10 @@ const RegistrationPage: React.FC = () => {
     } else if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.contact = "Enter a valid email address";
       isValid = false;
-    } else if (formData.phone_number && !/^\+?[1-9]\d{1,14}$/.test(formData.phone_number)) {
+    } else if (
+      formData.phone_number &&
+      !/^\+?[1-9]\d{1,14}$/.test(formData.phone_number)
+    ) {
       newErrors.contact = "Enter a valid phone number";
       isValid = false;
     }
@@ -106,8 +113,13 @@ const RegistrationPage: React.FC = () => {
     if (!formData.password) {
       newErrors.password = "Password is required";
       isValid = false;
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) {
-      newErrors.password = "Password must contain uppercase, lowercase, number, and special character";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        formData.password
+      )
+    ) {
+      newErrors.password =
+        "Password must contain uppercase, lowercase, number, and special character";
       isValid = false;
     }
 
@@ -117,12 +129,12 @@ const RegistrationPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.agreedToTerms) {
       setNotification({
         show: true,
         message: "Please agree to the terms and conditions",
-        isError: true
+        isError: true,
       });
       return;
     }
@@ -130,9 +142,9 @@ const RegistrationPage: React.FC = () => {
     if (validate()) {
       try {
         const response = await fetch(`${API_URL}/register`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         });
@@ -141,19 +153,19 @@ const RegistrationPage: React.FC = () => {
 
         if (response.ok) {
           setShowThankYouModal(true);
-          localStorage.setItem('token', data.data.token);
+          localStorage.setItem("token", data.data.token);
         } else {
           setNotification({
             show: true,
             message: data.error || "Registration failed",
-            isError: true
+            isError: true,
           });
         }
       } catch (error) {
         setNotification({
           show: true,
           message: "An error occurred during registration",
-          isError: true
+          isError: true,
         });
       }
     }
@@ -177,11 +189,11 @@ const RegistrationPage: React.FC = () => {
       <Snackbar
         open={notification.show}
         autoHideDuration={6000}
-        onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+        onClose={() => setNotification((prev) => ({ ...prev, show: false }))}
       >
-        <Alert 
+        <Alert
           severity={notification.isError ? "error" : "success"}
-          onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+          onClose={() => setNotification((prev) => ({ ...prev, show: false }))}
         >
           {notification.message}
         </Alert>
@@ -211,9 +223,9 @@ const RegistrationPage: React.FC = () => {
           variant="body2"
           sx={{ textAlign: "center", mb: 2, color: "white" }}
         >
-          Register now to unlock exclusive features and a personalized experience!
+          Register now to unlock exclusive features and a personalized
+          experience!
         </Typography>
-
         <Box
           sx={{
             display: "flex",
@@ -240,7 +252,7 @@ const RegistrationPage: React.FC = () => {
                     minWidth: "120px",
                     boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                     color: "#FFF",
-                    marginBottom:"16px"
+                    marginBottom: "16px",
                   }}
                 >
                   <Typography
@@ -337,6 +349,9 @@ const RegistrationPage: React.FC = () => {
                   borderRadius: 6,
                   backgroundColor: "#051737",
                   color: "white",
+                  "& .MuiSelect-icon": {
+                    color: "white", // Set the dropdown arrow color to white
+                  },
                 }}
               >
                 <MenuItem value={Currency.USD}>USD</MenuItem>
@@ -354,8 +369,14 @@ const RegistrationPage: React.FC = () => {
                 />
               }
               label={
-                <Typography sx={{ fontSize: "12px" }}>
-                  I AGREE TO THE TERMS AND CONDITIONS
+                <Typography variant="body2">
+                  I AGREE TO THE{" "}
+                  <Typography
+                    color="yellow"
+                    sx={{ cursor: "pointer", display: "inline-block" }}
+                  >
+                    TERMS AND CONDITIONS
+                  </Typography>
                 </Typography>
               }
             />
@@ -377,9 +398,9 @@ const RegistrationPage: React.FC = () => {
           </form>
         </Box>
       </Box>
-      <ThankYouModal 
-        open={showThankYouModal} 
-        onClose={() => setShowThankYouModal(false)} 
+      <ThankYouModal
+        open={showThankYouModal}
+        onClose={() => setShowThankYouModal(false)}
       />
     </Box>
   );

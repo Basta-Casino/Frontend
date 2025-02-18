@@ -21,20 +21,80 @@ declare module "@mui/material/Typography" {
 const theme = createTheme({
   typography: {
     fontFamily: "'Poppins', sans-serif",
+    h1: {
+      fontSize: "3rem",
+      "@media (max-width:991px)": {
+        fontSize: "2.5rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "2rem",
+      },
+    },
+    h2: {
+      fontSize: "2.5rem",
+      "@media (max-width:991px)": {
+        fontSize: "2rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "1.75rem",
+      },
+    },
+    h3: {
+      fontSize: "2rem",
+      "@media (max-width:991px)": {
+        fontSize: "1.75rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "1.5rem",
+      },
+    },
+    h4: {
+      fontSize: "1.75rem",
+      "@media (max-width:991px)": {
+        fontSize: "1.5rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "1.25rem",
+      },
+    },
+    h5: {
+      fontSize: "1.5rem",
+      "@media (max-width:991px)": {
+        fontSize: "1.25rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "1.125rem",
+      },
+    },
+    h6: {
+      fontSize: "1.25rem",
+      "@media (max-width:991px)": {
+        fontSize: "1.125rem",
+      },
+      "@media (max-width:600px)": {
+        fontSize: "1rem",
+      },
+    },
     body1: {
       fontSize: "16px",
+      "@media (max-width:991px)": {
+        fontSize: "15px",
+      },
       "@media (max-width:600px)": {
         fontSize: "14px",
       },
     },
     body2: {
       fontSize: "14px",
+      "@media (max-width:991px)": {
+        fontSize: "13px",
+      },
       "@media (max-width:600px)": {
         fontSize: "12px",
       },
     },
     body3: {
-      fontSize: "12px", // Custom variant for 12px text
+      fontSize: "12px",
     },
   },
   components: {
@@ -67,12 +127,6 @@ const theme = createTheme({
             "& fieldset": {
               borderColor: "#051737",
             },
-            "&:hover fieldset": {
-              // borderColor: "#FF3366", // Change border color on hover
-            },
-            "&.Mui-focused fieldset": {
-              // borderColor: "#FF3366", // Change border color when focused
-            },
           },
         },
       },
@@ -81,9 +135,26 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "20px",
+          textTransform: "none", // Optional: Prevents uppercase text
+        },
+        containedPrimary: {
+          backgroundColor: "#152744",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "#0f1d33", // Darker shade on hover
+          },
+        },
+        outlinedPrimary: {
+          borderColor: "#152744",
+          color: "white",
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: "rgba(21, 39, 68, 0.1)", // Light transparent effect
+          },
         },
       },
     },
+    
   },
 });
 

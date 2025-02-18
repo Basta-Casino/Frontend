@@ -90,11 +90,18 @@ const Footer: React.FC = () => {
           }}
         >
           {paymentMethods.map((method, index) => (
-            <Box key={index}>
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: { xs: "50px", sm: "60px", md: "100px" }, // Responsive height
+              }}
+            >
               <img
                 src={method.src}
                 alt={method.name}
-                style={{ maxWidth: "100%", height: "100px" }}
+                style={{ maxWidth: "100%", height: "100%" }} // `height: 100%` makes it adapt to the Box height
               />
             </Box>
           ))}
@@ -107,7 +114,7 @@ const Footer: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 3,
+            gap: { xs: 1, sm: 2 },
           }}
         >
           <Box
@@ -116,13 +123,17 @@ const Footer: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              p: 2,
+              p: { xs: 1, sm: 2 },
               borderRadius: 2,
               minWidth: "45%",
-              minHeight: "200px",
+              minHeight: { xs: "unset", sm: "200px" }, // Unset on extra small screens
             }}
           >
-            <img src={EpImg} alt="18+" style={{ maxWidth: "130px" }} />
+            <img
+              src={EpImg}
+              alt="18+"
+              style={{ maxWidth: window.innerWidth < 600 ? "80px" : "130px" }}
+            />
           </Box>
           <Box
             sx={{
@@ -130,10 +141,10 @@ const Footer: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              p: 2,
+              p: { xs: 1, sm: 2 },
               borderRadius: 2,
               minWidth: "45%",
-              minHeight: "200px",
+              minHeight: { xs: "unset", sm: "200px" }, // Unset on extra small screens
             }}
           >
             <img

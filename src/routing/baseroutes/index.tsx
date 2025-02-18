@@ -4,20 +4,15 @@ import PasswordResetNew from "../../layouts/AppWrapper/PasswordresetNew";
 import PasswordResetScreen from "../../layouts/AppWrapper/PasswordResetScreen";
 import RegistrationPage from "../../layouts/AppWrapper/RegistrationForm";
 import lazyLoad from "../../layouts/lazyLoader";
+import NotFound from "../../layouts/AppWrapper/NotFound";
+import VerifyEmail from "../../layouts/AppWrapper/VerifyEmail";
 
 // Dynamic Modules for efficient package loading
 const HomePage = lazyLoad(() => import("../../pages/home/page"));
 
 export const route1 = [
-  {
-    index: true,
-    element: (
-      <>
-        <HomePage />
-      </>
-    ),
-    label: "Home",
-  },
+  { path: "home", element: <HomePage />, label: "home" },
+
   { path: "register", element: <RegistrationPage />, label: "Register" },
   {
     path: "reset-password",
@@ -34,6 +29,11 @@ export const route1 = [
     path: "reset-new-password",
     element: <PasswordResetNew />,
     label: "reset-new-password",
+  },
+  {
+    path: "verify-email",
+    element: <VerifyEmail />,
+    label: "Verify Email",
   },
 
   { path: "slots", element: <>slotes</>, label: "Slotes" },
@@ -79,4 +79,5 @@ export const baseroutes = [
   ...route1.map((route) => ({ path: route.path, element: route.element })),
   ...route2.map((route) => ({ path: route.path, element: route.element })),
   ...route3.map((route) => ({ path: route.path, element: route.element })),
+  { path: "*", element: <NotFound /> },
 ];
