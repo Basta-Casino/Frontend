@@ -1,5 +1,21 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Button, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Box,
+  AvatarGroup,
+  Avatar,
+} from "@mui/material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import sliderimg1 from "../../assets/home-slider-img1.png";
+import sliderimg2 from "../../assets/home-slider-img2.png";
+import sliderimg3 from "../../assets/home-slider-img3.png";
+import profileImg from "../../assets/profile-img.png";
 
 interface GameCardProps {
   title: string;
@@ -8,15 +24,20 @@ interface GameCardProps {
   borderColor: string;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ title, description, image, borderColor }) => {
+const GameCard: React.FC<GameCardProps> = ({
+  title,
+  description,
+  image,
+  borderColor,
+}) => {
   return (
     <Card
       sx={{
         background: "linear-gradient(to bottom, #0A0F24, #16243D)",
         borderRadius: "12px",
         padding: "12px",
-        minWidth: 250,
-        maxWidth: 300,
+        minWidth: 300,
+        maxWidth: 350,
         border: `2px solid ${borderColor}`,
         boxShadow: "0px 4px 10px rgba(255, 255, 255, 0.1)",
         display: "flex",
@@ -24,37 +45,47 @@ const GameCard: React.FC<GameCardProps> = ({ title, description, image, borderCo
         alignItems: "center",
       }}
     >
-      <Typography variant="h6" sx={{ color: "#FFF", fontWeight: "bold" }}>
-        {title}
-      </Typography>
-      <Typography variant="body2" sx={{ color: "#CCC", textAlign: "center", mb: 2 }}>
-        {description}
-      </Typography>
+      <Box display="flex">
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h6" sx={{ color: "#FFF", fontWeight: "bold" }}>
+            {title}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "#CCC", mb: 2 }}>
+            {description}
+          </Typography>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Button variant="contained" color="error">
+              Play
+            </Button>
+            <Typography variant="body2" sx={{ color: "#FFF" }}>
+              4654
+            </Typography>
+            <AvatarGroup spacing={24}>
+              <Avatar
+                alt="Remy Sharp"
+                src={profileImg}
+                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+              />
+              <Avatar
+                alt="Remy Sharp"
+                src={profileImg}
+                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+              />
+              <Avatar
+                alt="Remy Sharp"
+                src={profileImg}
+                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+              />
+            </AvatarGroup>
+          </Box>
+        </Box>
 
-      <CardMedia
-        component="img"
-        image={image}
-        alt={title}
-        sx={{ width: "100px", height: "auto", mb: 2 }}
-      />
-
-      <Box display="flex" alignItems="center" gap={1}>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#D7263D",
-            color: "#FFF",
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            "&:hover": { backgroundColor: "#B71C30" },
-          }}
-        >
-          Play
-        </Button>
-        <Typography variant="body2" sx={{ color: "#FFF" }}>
-          4654
-        </Typography>
-        <img src="/chip-icon.png" alt="Chips" width="20" />
+        <CardMedia
+          component="img"
+          image={image}
+          alt={title}
+          sx={{ width: "100px", height: "auto", mb: 2 }}
+        />
       </Box>
     </Card>
   );
@@ -65,28 +96,53 @@ const GameCardList = () => {
     {
       title: "BASTA ROULETTE",
       description: "Roulette: A thrilling blend of luck and excitement.",
-      image: "/roulette.png",
+      image: sliderimg1,
       borderColor: "#E74C3C",
     },
     {
       title: "BASTA SLOT 7",
       description: "Slot 7 offers exciting spins and endless fun.",
-      image: "/slot7.png",
+      image: sliderimg2,
       borderColor: "#007BFF",
     },
     {
       title: "BASTA DICE",
       description: "Dice game: Roll for luck, strategy & excitement.",
-      image: "/dice.png",
+      image: sliderimg3,
       borderColor: "#F39C12",
     },
   ];
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 3000,
+    arrows: true,
+  };
+
   return (
-    <Box sx={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
-      {games.map((game, index) => (
-        <GameCard key={index} {...game} />
-      ))}
+    <Box
+      sx={{
+        // maxWidth: 350,
+        mx: "auto",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <Slider {...sliderSettings}>
+        {games.map((game, index) => (
+          <Box
+            key={index}
+            sx={{ display: "flex", justifyContent: "center", p: 1 }}
+          >
+            <GameCard {...game} />
+          </Box>
+        ))}
+      </Slider>
     </Box>
   );
 };

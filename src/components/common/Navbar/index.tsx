@@ -52,8 +52,8 @@ const Navbar = () => {
           sx={{ display: { xs: "none", md: "flex" } }}
         >
           <Button
-            variant="outlined"
-            color="inherit"
+            variant="contained"
+            color="primary"
             onClick={() => setOpenLogin(true)}
           >
             Login
