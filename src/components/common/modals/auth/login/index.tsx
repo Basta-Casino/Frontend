@@ -21,73 +21,119 @@ import googleIcon from "../../../../../assets/logo-icons/google-icon.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../../constants/api";
+
 interface LoginModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [notification, setNotification] = useState({ show: false, message: "", isError: false });
+  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
+  const handleLogin = async () => {
+    try {
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
+      const isPhone = /^\+?[1-9]\d{1,14}$/.test(emailOrPhone);
+
+      if (!isEmail && !isPhone) {
+        throw new Error("Please enter a valid email or phone number.");
+      }
+
+      const requestBody = {
+        [isEmail ? "email" : "phone_number"]: emailOrPhone,
+        password,
+      };
+
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        setNotification({
+          show: true,
+          message: "Login successful!",
+          isError: false,
+        });
+
+        setTimeout(() => {
+          onClose();
+          navigate("/home");
+        }, 1500);
+      } else {
+        throw new Error(data.error || "Login failed. Please try again.");
+      }
+    } catch (error: any) {
+      setNotification({
+        show: true,
+        message: error.message || "Login failed. Please try again.",
+        isError: true,
+      });
+    }
+  };
+
   const handleGoogleLogin = () => {
-    // Store the current URL before redirecting
-    sessionStorage.setItem('redirectUrl', window.location.href);
+    sessionStorage.setItem("redirectUrl", window.location.href);
     window.location.href = `${API_URL}/google`;
   };
 
   const handleFacebookLogin = () => {
-    // Store the current URL before redirecting
-    sessionStorage.setItem('redirectUrl', window.location.href);
+    sessionStorage.setItem("redirectUrl", window.location.href);
     window.location.href = `${API_URL}/facebook`;
   };
 
-  // Handle OAuth callback
   useEffect(() => {
     const handleOAuthCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
-      const error = urlParams.get('error');
+      const token = urlParams.get("token");
+      const error = urlParams.get("error");
 
       if (error) {
         setNotification({
           show: true,
           message: decodeURIComponent(error),
-          isError: true
+          isError: true,
         });
         return;
       }
 
       if (token) {
         try {
-          // Store the token
-          localStorage.setItem('token', token);
-          
-          // Show success notification
+          localStorage.setItem("token", token);
+
           setNotification({
             show: true,
             message: "Login successful!",
-            isError: false
+            isError: false,
           });
 
-          // Close the modal
           onClose();
 
-          // Redirect back to the stored URL
-          const redirectUrl = sessionStorage.getItem('redirectUrl');
+          const redirectUrl = sessionStorage.getItem("redirectUrl");
           if (redirectUrl) {
-            sessionStorage.removeItem('redirectUrl');
+            sessionStorage.removeItem("redirectUrl");
             window.location.href = redirectUrl;
           }
         } catch (error) {
           setNotification({
             show: true,
             message: "An error occurred during login",
-            isError: true
+            isError: true,
           });
         }
       }
@@ -129,11 +175,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         <Snackbar
           open={notification.show}
           autoHideDuration={6000}
-          onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+          onClose={() => setNotification((prev) => ({ ...prev, show: false }))}
         >
-          <Alert 
+          <Alert
             severity={notification.isError ? "error" : "success"}
-            onClose={() => setNotification(prev => ({ ...prev, show: false }))}
+            onClose={() => setNotification((prev) => ({ ...prev, show: false }))}
           >
             {notification.message}
           </Alert>
@@ -153,6 +199,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           fullWidth
           variant="outlined"
           placeholder="PHONE NUMBER OR EMAIL"
+          value={emailOrPhone}
+          onChange={(e) => setEmailOrPhone(e.target.value)}
           sx={{ marginBottom: "12px" }}
         />
         <Typography variant="body1" align="left" marginBottom={1}>
@@ -163,6 +211,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           variant="outlined"
           placeholder="Password"
           type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -203,7 +253,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             fontWeight: "bold",
             borderRadius: 6,
           }}
-          onClick={onClose}
+          onClick={handleLogin}
         >
           LOG IN
         </Button>
