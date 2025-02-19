@@ -144,7 +144,7 @@ const UserLogin: React.FC = () => {
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Password"
+          placeholder="PASSWORD"
           type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}

@@ -54,7 +54,7 @@ const Navbar = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setOpenLogin(true)}
+            onClick={() => navigate("/user-login")}
           >
             Login
           </Button>
