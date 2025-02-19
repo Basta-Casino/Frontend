@@ -19,7 +19,7 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const { setOpenLogin, setOpenThankYou, setOpenRegistrationForm } = useModal();
+  const { setOpenThankYou } = useModal();
 
   return (
     <Box

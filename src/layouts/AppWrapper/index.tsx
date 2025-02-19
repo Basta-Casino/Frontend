@@ -8,7 +8,14 @@ const AppWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const location = useLocation(); // Get the current route
 
-  const hideSidebarRoutes = ["/register", "/verify-email", "/user-login"]; // Add the routes
+  const hideSidebarRoutes = [
+    "/register",
+    "/verify-email",
+    "/user-login",
+    "/reset-password",
+    "/reset-new-password",
+    "/password-reset-screen",
+  ]; // Add the routes
   const shouldShowSidebar = !hideSidebarRoutes.includes(location.pathname);
 
   return (

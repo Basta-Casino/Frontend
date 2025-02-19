@@ -31,14 +31,14 @@ const SearchNavbar: React.FC = () => {
     <AppBar
       position="sticky"
       style={{
-        backgroundColor: "rgba(217, 217, 217, 0.1)",
+        backgroundColor: "#D9D9D91A",
         borderRadius: "20px",
         marginTop: "16px",
       }}
     >
       <Toolbar>
         {/* Dropdown Button */}
-        <Button variant="outlined" color="inherit" onClick={handleMenuOpen}>
+        <Button variant="contained" color="primary" onClick={handleMenuOpen}>
           All providers
         </Button>
         <Menu
@@ -56,7 +56,7 @@ const SearchNavbar: React.FC = () => {
         </Button>
 
         {/* Second Button */}
-        <Button variant="outlined" color="inherit" style={{ marginLeft: 20 }}>
+        <Button variant="contained" color="primary" style={{ marginLeft: 20 }}>
           New
         </Button>
 

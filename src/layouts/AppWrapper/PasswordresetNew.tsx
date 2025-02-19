@@ -15,72 +15,83 @@ const PasswordResetNew: React.FC = () => {
   return (
     <Box
       sx={{
+        width: "100vw",
+        height: "100vh",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
-        backgroundColor: "#0a1128",
+        position: "relative",
       }}
     >
-      <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
-        PASSWORD RESET
-      </Typography>
-
       <Box
         sx={{
-          backgroundColor: "#162744",
-          padding: 4,
+          position: "absolute",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "90%",
+          maxWidth: 400,
           borderRadius: 3,
-          boxShadow: 3,
-          width: "100%",
-          maxWidth: "450px",
+          p: 3,
+          textAlign: "left",
+          color: "white",
         }}
       >
-        <Typography variant="body2" color="white" mb={1}>
-          NEW PASSWORD
+        <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
+          PASSWORD RESET
         </Typography>
-        <TextField
-          fullWidth
-          type={showPassword ? "text" : "password"}
-          variant="outlined"
+
+        <Box
           sx={{
-            mb: 2,
-          }}
-          slotProps={{
-            input: {
-              style: { color: "white" }, // Correct way to set input text color
-            },
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                  sx={{ color: "white" }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{
-            borderRadius: "20px",
-            background: "linear-gradient(45deg, #e52d27, #b31217)",
-            color: "white",
-            fontWeight: "bold",
-            "&:hover": {
-              background: "linear-gradient(45deg, #b31217, #e52d27)",
-            },
+            backgroundColor: "#102A4E",
+            padding: 4,
+            borderRadius: 3,
+            boxShadow: 3,
+            width: "100%",
+            maxWidth: "550px",
+            minWidth: { xs: "unset", md: "500px" },
           }}
         >
-          RESET PASSWORD
-        </Button>
+          <Typography variant="body2" color="white" mb={1}>
+            NEW PASSWORD
+          </Typography>
+          <TextField
+            fullWidth
+            type={showPassword ? "text" : "password"}
+            variant="outlined"
+            sx={{ mb: 2 }}
+            InputProps={{
+              style: { color: "white" }, // Set input text color
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    sx={{ color: "white" }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+              borderRadius: "20px",
+              background: "linear-gradient(45deg, #e52d27, #b31217)",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                background: "linear-gradient(45deg, #b31217, #e52d27)",
+              },
+            }}
+          >
+            RESET PASSWORD
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

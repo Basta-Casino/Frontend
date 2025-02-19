@@ -138,18 +138,18 @@ const theme = createTheme({
           textTransform: "none", // Optional: Prevents uppercase text
         },
         containedPrimary: {
-          backgroundColor: "#152744",
+          backgroundColor: "#FFFFFF1A",
           color: "white",
           "&:hover": {
-            backgroundColor: "#0f1d33", // Darker shade on hover
+            backgroundColor: "#152744", // Darker shade on hover
           },
         },
         outlinedPrimary: {
-          borderColor: "#152744",
+          borderColor: "#FFFFFF1A",
           color: "white",
           backgroundColor: "transparent",
           "&:hover": {
-            backgroundColor: "rgba(21, 39, 68, 0.1)", // Light transparent effect
+            backgroundColor: "#152744", // Light transparent effect
           },
         },
       },

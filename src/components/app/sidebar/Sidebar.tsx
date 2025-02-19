@@ -48,12 +48,10 @@ const Sidebar: React.FC = () => {
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
-    toast.info(isMinimized ? "Sidebar Expanded" : "Sidebar Minimized");
   };
 
   const handleItemClick = (id: string, text: string) => {
     setActiveItem(id);
-    toast.success(`${text} Selected`);
   };
   const { setOpenWheelModal } = useModal(); // Access modal context
 
