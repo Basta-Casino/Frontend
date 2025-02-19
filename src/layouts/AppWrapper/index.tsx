@@ -3,15 +3,12 @@ import { Outlet, useLocation } from "react-router-dom"; // Import useLocation
 import Sidebar from "../../components/app/sidebar/Sidebar";
 import Navbar from "../../components/common/Navbar";
 import Footer from "./Footer";
-import CasinoBanner from "./CasinoBanner";
-import SearchNavbar from "./SearchNavbar";
-import GameCardList from "./GameCardList";
 
 const AppWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const location = useLocation(); // Get the current route
 
-  const hideSidebarRoutes = ["/register"]; // Add any routes where you don't want the sidebar
+  const hideSidebarRoutes = ["/register", "/verify-email", "/user-login"]; // Add the routes
   const shouldShowSidebar = !hideSidebarRoutes.includes(location.pathname);
 
   return (

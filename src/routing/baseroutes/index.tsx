@@ -6,6 +6,8 @@ import RegistrationPage from "../../layouts/AppWrapper/RegistrationForm";
 import lazyLoad from "../../layouts/lazyLoader";
 import NotFound from "../../layouts/AppWrapper/NotFound";
 import VerifyEmail from "../../layouts/AppWrapper/VerifyEmail";
+import MuiCard from "../../layouts/AppWrapper/UserLogin";
+import UserLogin from "../../layouts/AppWrapper/UserLogin";
 
 // Dynamic Modules for efficient package loading
 const HomePage = lazyLoad(() => import("../../pages/home/page"));
@@ -34,6 +36,11 @@ export const route1 = [
     path: "verify-email",
     element: <VerifyEmail />,
     label: "Verify Email",
+  },
+  {
+    path: "user-login",
+    element: <UserLogin />,
+    label: "User Login",
   },
 
   { path: "slots", element: <>slotes</>, label: "Slotes" },
