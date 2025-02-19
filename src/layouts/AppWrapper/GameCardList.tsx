@@ -112,16 +112,36 @@ const GameCardList = () => {
       borderColor: "#F39C12",
     },
   ];
-
   const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
     arrows: true,
+    slidesToShow: 3, // Default
+
+    responsive: [
+      {
+        breakpoint: 1200, // Below 1200px
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 600, // Below 600px
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (

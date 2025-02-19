@@ -6,8 +6,7 @@ import GameCard from "../../layouts/AppWrapper/GameCard";
 
 const HomePage = () => {
   return (
-    <Container maxWidth="lg">
-      {" "}
+    <Container maxWidth={false}>
       <CasinoBanner />
       <GameCardList />
       <SearchNavbar />

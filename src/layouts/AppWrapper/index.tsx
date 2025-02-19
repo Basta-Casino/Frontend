@@ -58,6 +58,8 @@ const AppWrapper = () => {
             flexGrow: 1,
             padding: 0,
             width: "100%",
+            minHeight: "calc(100vh - 64px)", // Ensure it fits within the viewport
+            overflowY: "hidden", // Enable scrolling if content overflows
           }}
         >
           <Outlet />

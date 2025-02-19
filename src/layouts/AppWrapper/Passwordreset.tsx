@@ -1,16 +1,23 @@
 import React from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import Gamesbg from "../../assets/games-bg.png";
+import { useNavigate } from "react-router-dom";
 
 const PasswordReset: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${Gamesbg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         position: "relative",
       }}
     >
@@ -37,35 +44,35 @@ const PasswordReset: React.FC = () => {
             backgroundColor: "#102A4E",
             padding: 4,
             borderRadius: 3,
-            boxShadow: 3,
+            border: "2px solid #FF3366",
+            boxShadow: 24,
             width: "100%",
             maxWidth: "550px",
-            minWidth: { xs: "unset", md: "500px" }, // Remove minWidth on small screens
+            minWidth: { xs: "unset", md: "500px" },
           }}
         >
-          <Typography variant="body2" color="white" mb={1}>
-            PHONE OR EMAIL
-          </Typography>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="ENTER PHONE OR EMAIL"
-            sx={{
-              mb: 2,
-            }}
-          />
+          <Box display="flex" alignItems="center" gap={1} mb={2}>
+            <Typography
+              variant="body2"
+              color="white"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              PHONE OR EMAIL
+            </Typography>
+            <TextField
+              fullWidth
+              variant="outlined"
+              // placeholder="ENTER PHONE OR EMAIL"
+              sx={{
+                flexGrow: 1,
+              }}
+            />
+          </Box>
+
           <Button
-            fullWidth
             variant="contained"
-            sx={{
-              borderRadius: "20px",
-              background: "linear-gradient(45deg, #e52d27, #b31217)",
-              color: "white",
-              fontWeight: "bold",
-              "&:hover": {
-                background: "linear-gradient(45deg, #b31217, #e52d27)",
-              },
-            }}
+            color="error"
+            onClick={() => navigate("/reset-new-password")}
           >
             RESET PASSWORD
           </Button>

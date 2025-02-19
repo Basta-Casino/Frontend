@@ -8,6 +8,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Gamesbg from "../../assets/games-bg.png";
 
 const PasswordResetNew: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,11 +16,15 @@ const PasswordResetNew: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${Gamesbg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         position: "relative",
       }}
     >
@@ -46,38 +51,43 @@ const PasswordResetNew: React.FC = () => {
             backgroundColor: "#102A4E",
             padding: 4,
             borderRadius: 3,
-            boxShadow: 3,
+            border: "2px solid #FF3366",
+            boxShadow: 24,
             width: "100%",
             maxWidth: "550px",
             minWidth: { xs: "unset", md: "500px" },
           }}
         >
-          <Typography variant="body2" color="white" mb={1}>
-            NEW PASSWORD
-          </Typography>
-          <TextField
-            fullWidth
-            type={showPassword ? "text" : "password"}
-            variant="outlined"
-            sx={{ mb: 2 }}
-            InputProps={{
-              style: { color: "white" }, // Set input text color
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    sx={{ color: "white" }}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Box display="flex" alignItems="center" gap={1} mb={2}>
+            <Typography
+              variant="body2"
+              color="white"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              NEW PASSWORD
+            </Typography>
+            <TextField
+              fullWidth
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              InputProps={{
+                style: { color: "white" }, // Set input text color
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      sx={{ color: "white" }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
 
           <Button
-            fullWidth
             variant="contained"
             sx={{
               borderRadius: "20px",

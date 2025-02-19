@@ -50,6 +50,7 @@ const CasinoBanner: React.FC = () => {
         justifyContent: "space-between",
         width: "100%",
         minHeight: "250px",
+        overflow: "hidden",
         marginTop: "30px",
       }}
     >
@@ -160,7 +161,12 @@ const CasinoBanner: React.FC = () => {
           </Stack>
         </Stack>
       </Box>
-      <Box sx={{ transform: "scale(1.4)", transition: "0.3s ease-in-out" }}>
+      <Box
+        sx={{
+          transform: "scale(1.4)",
+          transition: "0.3s ease-in-out",
+        }}
+      >
         <img src={casinoImg} alt="Casino Slot Machine" width={400} />
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { API_URL } from "../../constants/api.ts";
 import { Currency } from "../../constants/currencies.ts";
-import ThankYouModal from "../../components/common/modals/auth/login/ThankyouModal";
+import ThankYouModal from "../../components/common/modals/auth/login/ThankYouModal.tsx";
 import { SelectChangeEvent } from "@mui/material";
 import {
   Box,
@@ -174,7 +174,7 @@ const RegistrationPage: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         display: "flex",
         alignItems: "center",
@@ -381,18 +381,7 @@ const RegistrationPage: React.FC = () => {
               }
             />
 
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              sx={{
-                mt: 2,
-                bgcolor: "#D50000",
-                color: "#fff",
-                py: 1.5,
-                borderRadius: 6,
-              }}
-            >
+            <Button fullWidth type="submit" variant="contained" color="error">
               REGISTER
             </Button>
           </form>

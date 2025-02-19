@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import LoginModal from "../../components/common/modals/auth/login/index";
-import ThankYouModal from "../../components/common/modals/auth/login/ThankyouModal";
+import ThankYouModal from "../../components/common/modals/auth/login/ThankYouModal";
 import WheelModal from "../../components/common/modals/auth/login/WheelModal";
 import RegistrationFormModal from "../../components/common/modals/auth/login/RegistrationFormModal"; // Import Registration Form Modal
 
@@ -48,14 +48,6 @@ export const ModalController = () => {
     openRegistrationForm,
     setOpenRegistrationForm,
   } = useModal();
-
-  useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisited");
-    if (!hasVisited) {
-      setOpenLogin(true);
-      localStorage.setItem("hasVisited", "true");
-    }
-  }, [setOpenLogin]);
 
   return (
     <>

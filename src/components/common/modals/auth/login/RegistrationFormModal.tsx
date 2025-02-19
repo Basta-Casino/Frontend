@@ -199,19 +199,7 @@ const RegistrationFormModal: React.FC<RegistrationFormModalProps> = ({
           />
 
           {/* Register Button */}
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-                
-              bgcolor: "#D50000",
-              color: "#fff",
-              fontWeight: "bold",
-              py: 1.5,
-              borderRadius: 10,
-              "&:hover": { bgcolor: "#B00000" },
-            }}
-          >
+          <Button fullWidth variant="contained" color="error">
             REGISTRATION
           </Button>
         </form>

@@ -88,7 +88,7 @@ const UserLogin: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         display: "flex",
         alignItems: "center",
@@ -117,9 +117,7 @@ const UserLogin: React.FC = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "90%",
-          maxWidth: 400,
-          bgcolor: "#102A4E",
-          border: "2px solid #FF3366",
+          maxWidth: 500,
           borderRadius: 3,
           boxShadow: 24,
           p: 3,
@@ -127,106 +125,124 @@ const UserLogin: React.FC = () => {
           color: "white",
         }}
       >
-        <Typography variant="body1" align="left" marginBottom={1}>
-          PHONE NUMBER OR EMAIL
+        {" "}
+        <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
+          LOGIN{" "}
         </Typography>
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="PHONE NUMBER OR EMAIL"
-          value={emailOrPhone}
-          onChange={(e) => setEmailOrPhone(e.target.value)}
-          sx={{ marginBottom: "12px" }}
-        />
-        <Typography variant="body1" align="left" marginBottom={1}>
-          PASSWORD
-        </Typography>
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="PASSWORD"
-          type={showPassword ? "text" : "password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPassword}
-                  sx={{ color: "white" }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
         <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop={2}
+          sx={{
+            bgcolor: "#102A4E",
+            border: "2px solid #FF3366",
+            borderRadius: 3,
+            boxShadow: 24,
+            p: 3,
+            textAlign: "center",
+            color: "white",
+          }}
         >
-          <FormControlLabel
-            control={
-              <Checkbox
-                sx={{ color: "white", "&.Mui-checked": { color: "#FF3366" } }}
-              />
-            }
-            label={<Typography sx={{ color: "white" }}>Remember Me</Typography>}
+          <Typography variant="body1" align="left" marginBottom={1}>
+            PHONE NUMBER OR EMAIL
+          </Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="PHONE NUMBER OR EMAIL"
+            value={emailOrPhone}
+            onChange={(e) => setEmailOrPhone(e.target.value)}
+            sx={{ marginBottom: "12px" }}
           />
-          <Typography
-            color="yellow"
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/reset-password");
+          <Typography variant="body1" align="left" marginBottom={1}>
+            PASSWORD
+          </Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="PASSWORD"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    sx={{ color: "white" }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
+          />
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop={2}
           >
-            Forgot Password?
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{ color: "white", "&.Mui-checked": { color: "#FF3366" } }}
+                />
+              }
+              label={
+                <Typography sx={{ color: "white" }}>Remember Me</Typography>
+              }
+            />
+            <Typography
+              color="yellow"
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/reset-password");
+              }}
+            >
+              Forgot Password?
+            </Typography>
+          </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 2,
+              mb: 2,
+              background: "linear-gradient(to right, #d32f2f, #ff0000)",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: 6,
+            }}
+            onClick={handleLogin}
+          >
+            LOG IN
+          </Button>
+          <Box display="flex" justifyContent="center" gap={2} mt={2}>
+            <IconButton onClick={handleFacebookLogin}>
+              <Avatar
+                src={facebookIcon}
+                alt="Facebook"
+                sx={{ width: 24, height: 24 }}
+              />
+            </IconButton>
+            <IconButton onClick={handleGoogleLogin}>
+              <Avatar
+                src={googleIcon}
+                alt="Google"
+                sx={{ width: 24, height: 24 }}
+              />
+            </IconButton>
+          </Box>
+          <Typography mt={2} color="gray">
+            DON'T HAVE AN ACCOUNT?{" "}
+            <span
+              style={{ color: "yellow", cursor: "pointer" }}
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              REGISTER
+            </span>
           </Typography>
         </Box>
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{
-            mt: 2,
-            mb: 2,
-            background: "linear-gradient(to right, #d32f2f, #ff0000)",
-            color: "white",
-            fontWeight: "bold",
-            borderRadius: 6,
-          }}
-          onClick={handleLogin}
-        >
-          LOG IN
-        </Button>
-        <Box display="flex" justifyContent="center" gap={2} mt={2}>
-          <IconButton onClick={handleFacebookLogin}>
-            <Avatar
-              src={facebookIcon}
-              alt="Facebook"
-              sx={{ width: 24, height: 24 }}
-            />
-          </IconButton>
-          <IconButton onClick={handleGoogleLogin}>
-            <Avatar
-              src={googleIcon}
-              alt="Google"
-              sx={{ width: 24, height: 24 }}
-            />
-          </IconButton>
-        </Box>
-        <Typography mt={2} color="gray">
-          DON'T HAVE AN ACCOUNT?{" "}
-          <span
-            style={{ color: "yellow", cursor: "pointer" }}
-            onClick={() => {
-              navigate("/register");
-            }}
-          >
-            REGISTER
-          </span>
-        </Typography>
       </Box>
     </Box>
   );
