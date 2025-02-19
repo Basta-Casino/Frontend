@@ -2,12 +2,15 @@ import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Goldicon from "../../../../../assets/logo-icons/gold-thumsup.png";
+import { useNavigate } from "react-router-dom";
 interface ThankYouModalProps {
   open: boolean;
   onClose: () => void;
 }
 
 const ThankYouModal: React.FC<ThankYouModalProps> = ({ open, onClose }) => {
+  const navigate = useNavigate();
+
   return (
     <Modal open={open} onClose={onClose} aria-labelledby="thank-you-modal">
       <Box
@@ -69,15 +72,8 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ open, onClose }) => {
         {/* Play Button */}
         <Button
           variant="contained"
-          sx={{
-            mt: 2,
-            background: "linear-gradient(to right, #FF4B2B, #FF416C)",
-            color: "white",
-            fontWeight: "bold",
-            borderRadius: "20px",
-            px: 4,
-          }}
-          onClick={onClose}
+          color="error"
+          onClick={() => navigate("/home")}
         >
           PLAY
         </Button>
