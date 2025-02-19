@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, CircularProgress, Alert, Button } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import { useModal } from "../../services/ModalControl";
 import { API_URL } from "../../constants/api";
@@ -25,7 +25,8 @@ const VerifyEmail: React.FC<Props> = () => {
     error: null,
   });
 
-  const [isModalContextReady, setIsModalContextReady] = useState(false); // New state
+  const [isModalContextReady, setIsModalContextReady] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const verifyEmailToken = async () => {
@@ -58,7 +59,6 @@ const VerifyEmail: React.FC<Props> = () => {
           error: error.response?.data?.error || "Verification failed. Please try again.",
         });
       } finally {
-        // Mark the modal context as ready after the verification attempt
         setIsModalContextReady(true);
       }
     };
@@ -67,11 +67,7 @@ const VerifyEmail: React.FC<Props> = () => {
   }, [searchParams]);
 
   const handleLoginClick = () => {
-    if (setOpenLogin) {
-      setOpenLogin(true);
-    } else {
-      console.error("setOpenLogin is not available!"); // Log an error if it's still not available
-    }
+    navigate("/login"); 
   };
 
   return (

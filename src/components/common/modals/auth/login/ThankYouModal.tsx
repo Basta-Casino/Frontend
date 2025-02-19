@@ -58,8 +58,9 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ open, onClose }) => {
 
         {/* Description */}
         <Typography sx={{ fontSize: "14px", textAlign: "center", px: 2 }}>
-          Thank you for registering! We're excited to have you on board. Stay
-          tuned for updates and enjoy exploring all the features we offer.
+          Thank you for registering! We're excited to have you on board. Please
+          check your email to verify your account. Stay tuned for updates and
+          enjoy exploring all the features we offer.
         </Typography>
 
         {/* "Good Luck" Text */}

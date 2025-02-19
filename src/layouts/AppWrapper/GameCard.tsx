@@ -1,6 +1,29 @@
-import React from "react";
-import { Card, CardMedia, Button, Typography, Box } from "@mui/material";
-import gameImg from "../../assets/game-1.png"; // Import your image here
+import React, { useEffect, useState } from "react";
+import { Card, CardMedia, Button, Typography, Box, CircularProgress } from "@mui/material";
+
+// API base URL
+const API_BASE_URL = 'http://localhost:5000';
+
+interface Game {
+  _id: string;
+  name: string;
+  provider: string;
+  image_url: string;
+  status: number;
+}
+
+interface GameResponse {
+  success: boolean;
+  message: string;
+  data: {
+    games: Game[];
+    pagination: {
+      total: number;
+      page: number;
+      totalPages: number;
+    };
+  };
+}
 
 interface GameCardProps {
   title: string;
@@ -82,50 +105,55 @@ const GameCard: React.FC<GameCardProps> = ({ title, image }) => {
   );
 };
 
-const games = [
-  {
-    title: "Game 1",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 2",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 3",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 4",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 5",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 6",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 7",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 8",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 9",
-    image: "https://via.placeholder.com/300x200",
-  },
-  {
-    title: "Game 10",
-    image: "https://via.placeholder.com/300x200",
-  },
-];
-
 const GameCardList = () => {
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/games`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch games: ${response.status}`);
+        }
+        
+        const data: GameResponse = await response.json();
+        
+        if (data.success && data.data.games) {
+          setGames(data.data.games);
+        } else {
+          throw new Error(data.message || 'Failed to load games data');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        console.error('Error fetching games:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGames();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ textAlign: 'center', color: 'error.main', my: 4 }}>
+        <Typography variant="h6">Error: {error}</Typography>
+        <Typography variant="body2">Please check your API connection and try again.</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -135,8 +163,12 @@ const GameCardList = () => {
         marginTop: 2,
       }}
     >
-      {games.map((game, index) => (
-        <GameCard key={index} title={game.title} image={gameImg} />
+      {games.map((game) => (
+        <GameCard 
+          key={game._id} 
+          title={game.name} 
+          image={game.image_url} 
+        />
       ))}
     </Box>
   );

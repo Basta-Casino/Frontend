@@ -38,7 +38,7 @@ export const route1 = [
     label: "Verify Email",
   },
   {
-    path: "user-login",
+    path: "login",
     element: <UserLogin />,
     label: "User Login",
   },

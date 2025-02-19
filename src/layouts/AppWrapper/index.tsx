@@ -1,21 +1,21 @@
 import { Box, Stack, useMediaQuery } from "@mui/material";
-import { Outlet, useLocation } from "react-router-dom"; // Import useLocation
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../../components/app/sidebar/Sidebar";
 import Navbar from "../../components/common/Navbar";
 import Footer from "./Footer";
 
 const AppWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
 
   const hideSidebarRoutes = [
     "/register",
     "/verify-email",
-    "/user-login",
+    "/login",
     "/reset-password",
     "/reset-new-password",
     "/password-reset-screen",
-  ]; // Add the routes
+  ];
   const shouldShowSidebar = !hideSidebarRoutes.includes(location.pathname);
 
   return (
