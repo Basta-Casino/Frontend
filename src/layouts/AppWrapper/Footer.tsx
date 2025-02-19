@@ -9,9 +9,6 @@ import VWImg from "../../assets/footerImg6.png";
 import ScrillImg from "../../assets/footerImg5.png";
 import EpImg from "../../assets/18plus.png";
 import GcbImg from "../../assets/footerImgGcb.png";
-import PasswordReset from "./Passwordreset";
-import CheckEmail from "./CheckEmail";
-import PasswordResetScreen from "./PasswordResetScreen";
 
 // Sample payment method logos (Replace with real assets)
 const paymentMethods = [

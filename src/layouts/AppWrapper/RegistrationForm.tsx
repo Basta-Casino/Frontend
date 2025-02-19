@@ -303,7 +303,7 @@ const RegistrationPage: React.FC = () => {
             <TextField
               fullWidth
               variant="outlined"
-              placeholder="Phone Number or Email"
+              placeholder="PHONE NUMBER OR EMAIL"
               name="contact"
               onChange={handleContactChange}
               error={!!errors.contact}
@@ -317,7 +317,7 @@ const RegistrationPage: React.FC = () => {
               fullWidth
               variant="outlined"
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="PASSWORD"
               name="password"
               value={formData.password}
               onChange={handleChange}

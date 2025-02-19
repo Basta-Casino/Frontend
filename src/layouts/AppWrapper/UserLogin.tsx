@@ -161,9 +161,18 @@ const UserLogin: React.FC = () => {
             ),
           }}
         />
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          marginTop={2}
+        >
           <FormControlLabel
-            control={<Checkbox sx={{ color: "white" }} />}
+            control={
+              <Checkbox
+                sx={{ color: "white", "&.Mui-checked": { color: "#FF3366" } }}
+              />
+            }
             label={<Typography sx={{ color: "white" }}>Remember Me</Typography>}
           />
           <Typography
