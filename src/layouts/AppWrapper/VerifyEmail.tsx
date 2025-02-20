@@ -128,10 +128,21 @@ const VerifyEmail: React.FC<Props> = () => {
             <Typography variant="h4" color="white" sx={{ mb: 2 }}>
               Email Verified!
             </Typography>
-            <Alert severity="success" sx={{ mb: 2, width: "100%" }}>
+            <Typography
+              variant="body1"
+              color="success"
+              sx={{
+                mb: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
+              }}
+            >
+              {" "}
               Your email has been successfully verified. You can now login to
               your account.
-            </Alert>
+            </Typography>
             {/* Conditionally render the button */}
             {isModalContextReady && (
               <Button
