@@ -7,7 +7,7 @@ import {
 import AppWrapper from "../AppWrapper/index";
 import "../../styles/reset.css";
 
-const RootWrapper = ({ children }: { children?: React.ReactNode }) => {
+const RootWrapper = ({}: { children?: React.ReactNode }) => {
   return (
     <ReduxStoreWrapper>
       <ModalProvider>

@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  CircularProgress,
-  Alert,
-  Button,
-} from "@mui/material";
+import { Box, Typography, CircularProgress, Button } from "@mui/material";
 import { useSearchParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
-import { useModal } from "../../services/ModalControl";
 import { API_URL } from "../../constants/api";
 import Gamesbg from "../../assets/games-bg.png";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -26,7 +19,6 @@ interface VerificationState {
 
 const VerifyEmail: React.FC<Props> = () => {
   const [searchParams] = useSearchParams();
-  const { setOpenLogin } = useModal();
   const [verificationState, setVerificationState] = useState<VerificationState>(
     {
       isLoading: true,

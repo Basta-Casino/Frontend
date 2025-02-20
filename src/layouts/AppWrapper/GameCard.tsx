@@ -6,7 +6,6 @@ import {
   Typography,
   Box,
   CircularProgress,
-  Pagination,
 } from "@mui/material";
 import CustomPagination from "../../components/ui/CustomPagination";
 

@@ -6,7 +6,6 @@ import RegistrationPage from "../../layouts/AppWrapper/RegistrationForm";
 import lazyLoad from "../../layouts/lazyLoader";
 import NotFound from "../../layouts/AppWrapper/NotFound";
 import VerifyEmail from "../../layouts/AppWrapper/VerifyEmail";
-import MuiCard from "../../layouts/AppWrapper/UserLogin";
 import UserLogin from "../../layouts/AppWrapper/UserLogin";
 
 // Dynamic Modules for efficient package loading

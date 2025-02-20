@@ -2,19 +2,33 @@ import { Box, Pagination, PaginationItem } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-const CustomPagination = ({ count, page, setPage }) => {
+interface CustomPaginationProps {
+  count: number;
+  page: number;
+  setPage: (value: number) => void;
+}
+
+const CustomPagination: React.FC<CustomPaginationProps> = ({
+  count,
+  page,
+  setPage,
+}) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
       <Pagination
-        count={count} // Fix: Use `count` instead of `totalPages`
+        count={count}
         page={page}
         onChange={(e, value) => setPage(value)}
         renderItem={(item) => (
           <PaginationItem
             {...item}
+            slots={{
+              previous: ArrowBackIcon,
+              next: ArrowForwardIcon,
+            }}
             sx={{
               "&.Mui-selected": {
-                background: "linear-gradient(135deg,#FF1A44, #871628)", // Red gradient
+                background: "linear-gradient(135deg,#FF1A44, #871628)",
                 color: "white",
                 fontWeight: "bold",
               },
@@ -29,13 +43,6 @@ const CustomPagination = ({ count, page, setPage }) => {
               borderColor: item.type === "next" ? "yellow" : "white",
               color: "white",
             }}
-            icon={
-              item.type === "previous" ? (
-                <ArrowBackIcon />
-              ) : item.type === "next" ? (
-                <ArrowForwardIcon />
-              ) : null
-            }
           />
         )}
       />

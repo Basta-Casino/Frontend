@@ -11,7 +11,6 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   FaHome,
