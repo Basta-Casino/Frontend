@@ -123,6 +123,7 @@ const PasswordResetNew: React.FC = () => {
             <Typography
               variant="body1"
               color="white"
+              mb={1}
               sx={{ whiteSpace: "nowrap" }}
             >
               NEW PASSWORD

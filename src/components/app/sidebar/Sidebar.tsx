@@ -12,14 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  FaHome,
-  FaUser,
-  FaFile,
-  FaCalendar,
-  FaBell,
-  FaCog,
-} from "react-icons/fa";
 import ExtraMenu from "./ExtraMenu";
 import { useModal } from "../../../services/ModalControl/index";
 import BonusImg from "../../../assets/bonus-frame.png";
