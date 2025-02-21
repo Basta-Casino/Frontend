@@ -19,28 +19,39 @@ import {
   FaCalendar,
   FaBell,
   FaCog,
-  FaAngleLeft,
 } from "react-icons/fa";
 import ExtraMenu from "./ExtraMenu";
 import { useModal } from "../../../services/ModalControl/index";
 import BonusImg from "../../../assets/bonus-frame.png";
 import WheelImg from "../../../assets/bonus-wheel.png";
+import homeIcon from "../../../assets/logo-icons/home.png";
+import slotsIcon from "../../../assets/logo-icons/slots-icon.png";
+import liveGamesIcon from "../../../assets/logo-icons/live-games-icon.png";
+import tablesIcon from "../../../assets/logo-icons/table-icon.png";
+import eventsIcon from "../../../assets/logo-icons/events-icon.png";
+import settingsIcon from "../../../assets/logo-icons/settings-icon.svg";
 
 interface MenuItem {
   id: string;
   text: string;
   icon: JSX.Element;
 }
-
 const menuItems: MenuItem[] = [
-  { id: "home", text: "HOME", icon: <FaHome /> },
-  { id: "slots", text: "SLOTS", icon: <FaUser /> },
-  { id: "liveGames", text: "LIVE GAMES", icon: <FaFile /> },
-  { id: "tables", text: "TABLES", icon: <FaCalendar /> },
-  { id: "events", text: "EVENTS", icon: <FaBell /> },
-  { id: "settings", text: "SETTINGS", icon: <FaCog /> },
+  { id: "home", text: "HOME", icon: <img src={homeIcon} alt="Home" /> },
+  { id: "slots", text: "SLOTS", icon: <img src={slotsIcon} alt="Slots" /> },
+  {
+    id: "liveGames",
+    text: "LIVE GAMES",
+    icon: <img src={liveGamesIcon} alt="Live Games" />,
+  },
+  { id: "tables", text: "TABLES", icon: <img src={tablesIcon} alt="Tables" /> },
+  { id: "events", text: "EVENTS", icon: <img src={eventsIcon} alt="Events" /> },
+  {
+    id: "settings",
+    text: "SETTINGS",
+    icon: <img src={settingsIcon} alt="Settings" />,
+  },
 ];
-
 const Sidebar: React.FC = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [activeItem, setActiveItem] = useState("home");

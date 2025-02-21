@@ -92,6 +92,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, image }) => {
       >
         <Button
           variant="contained"
+          title="Play"
           sx={{
             backgroundColor: "#FFA500",
             color: "#FFF",
@@ -104,6 +105,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, image }) => {
         </Button>
         <Button
           variant="contained"
+          title="Demo"
           sx={{
             backgroundColor: "#333333",
             color: "#FFF",
@@ -202,7 +204,7 @@ const GameCardList = () => {
           },
           gap: 2,
           justifyContent: "center",
-          padding: 2,
+          py: 2,
           minHeight: "400px",
         }}
       >
@@ -210,7 +212,7 @@ const GameCardList = () => {
           <GameCard key={game._id} title={game.name} image={game.image_url} />
         ))}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 1, mb: 3 }}>
         <CustomPagination count={totalPages} page={page} setPage={setPage} />
       </Box>
     </Box>

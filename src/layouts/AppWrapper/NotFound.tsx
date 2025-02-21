@@ -83,6 +83,7 @@ const NotFound: React.FC<Props> = ({ navigation, buttonText }) => {
 
         <Button
           variant="contained"
+          title="Home"
           color="error"
           sx={{
             width: "150px",

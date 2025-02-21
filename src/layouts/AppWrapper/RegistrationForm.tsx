@@ -175,7 +175,7 @@ const RegistrationPage: React.FC = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -202,189 +202,216 @@ const RegistrationPage: React.FC = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 500,
+          maxWidth: 600,
           mx: "auto",
-          mt: 5,
           p: 3,
-          position: "absolute",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           color: "white",
           borderRadius: "16px",
           textAlign: "center",
         }}
       >
         {" "}
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
-          REGISTRATION
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{ textAlign: "center", mb: 2, color: "white" }}
-        >
-          Register now to unlock exclusive features and a personalized
-          experience!
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 1,
-          }}
-        >
-          {["10% CASHBACK", "100% OF THE DEPOSIT", "100% FREE SPINS"].map(
-            (text, index) => {
-              const match = text.match(/(\d+)(%?)(.*)/);
-              const number = match ? match[1] : "";
-              const percentage = match ? match[2] : "";
-              const label = match ? match[3] : "";
+        <Box>
+          <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+            REGISTRATION
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              textAlign: "center",
+              mb: 1,
+              color: "white",
+              textTransform: "uppercase",
+            }}
+          >
+            Register now to unlock exclusive features and a personalized
+            experience!
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 1,
+            }}
+          >
+            {["10% CASHBACK", "100% OF THE DEPOSIT", "100% FREE SPINS"].map(
+              (text, index) => {
+                const match = text.match(/(\d+)(%?)(.*)/);
+                const number = match ? match[1] : "";
+                const percentage = match ? match[2] : "";
+                const label = match ? match[3] : "";
 
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    bgcolor: "#102A4E",
-                    border: "2px solid #FF3366",
-                    borderRadius: "12px",
-                    padding: "12px 20px",
-                    textAlign: "center",
-                    minWidth: "120px",
-                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
-                    color: "#FFF",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    component="span"
-                    sx={{ fontWeight: "bold", color: "#FF1A44" }}
-                  >
-                    {number}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    component="span"
+                return (
+                  <Box
+                    key={index}
                     sx={{
-                      fontWeight: "bold",
-                      color: "#FF1A44",
-                      marginLeft: "2px",
+                      bgcolor: "#102A4E",
+                      border: "2px solid #FF3366",
+                      borderRadius: "12px",
+                      padding: "12px 20px",
+                      textAlign: "center",
+                      minWidth: "120px",
+                      boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                      color: "#FFF",
+                      marginBottom: "16px",
                     }}
                   >
-                    {percentage}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="span"
-                    sx={{ display: "block", marginTop: "4px", color: "#EEE" }}
-                  >
-                    {label}
-                  </Typography>
-                </Box>
-              );
-            }
-          )}
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: 500,
-            mx: "auto",
-            p: 3,
-            bgcolor: "#102A4E",
-            borderRadius: 3,
-            boxShadow: 3,
-            textAlign: "center",
-            color: "white",
-            border: "2px solid #FF3366",
-          }}
-        >
-          <form onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="PHONE NUMBER OR EMAIL"
-              name="contact"
-              onChange={handleContactChange}
-              error={!!errors.contact}
-              helperText={errors.contact}
-              sx={{
-                mb: 2,
-              }}
-            />
-
-            <TextField
-              fullWidth
-              variant="outlined"
-              type={showPassword ? "text" : "password"}
-              placeholder="PASSWORD"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              error={!!errors.password}
-              helperText={errors.password}
-              sx={{
-                mb: 2,
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword(!showPassword)}
-                      sx={{ color: "white" }}
+                    <Typography
+                      variant="h5"
+                      component="span"
+                      sx={{ fontWeight: "bold", color: "#FF1A44" }}
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <FormControl fullWidth sx={{ mb: 2 }}>
-              <Select
-                value={formData.currency}
-                name="currency"
-                onChange={handleCurrencyChange}
+                      {number}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      component="span"
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#FF1A44",
+                        marginLeft: "2px",
+                      }}
+                    >
+                      {percentage}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      component="span"
+                      sx={{ display: "block", marginTop: "4px", color: "#EEE" }}
+                    >
+                      {label}
+                    </Typography>
+                  </Box>
+                );
+              }
+            )}
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: 600,
+              mx: "auto",
+              p: 3,
+              px: { xs: 3, md: 10 },
+              bgcolor: "#102A4E",
+              borderRadius: 3,
+              boxShadow: 3,
+              textAlign: "center",
+              color: "white",
+              border: "2px solid #FF3366",
+            }}
+          >
+            <form onSubmit={handleSubmit}>
+              <Typography variant="body1" align="left" marginBottom={1}>
+                PHONE NUMBER OR EMAIL
+              </Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="PHONE NUMBER OR EMAIL"
+                name="contact"
+                onChange={handleContactChange}
+                error={!!errors.contact}
+                helperText={errors.contact}
                 sx={{
-                  borderRadius: 6,
-                  backgroundColor: "#051737",
-                  color: "white",
-                  "& .MuiSelect-icon": {
-                    color: "white", // Set the dropdown arrow color to white
-                  },
+                  mb: 2,
                 }}
-              >
-                <MenuItem value={Currency.USD}>USD</MenuItem>
-                <MenuItem value={Currency.EUR}>EUR</MenuItem>
-                <MenuItem value={Currency.INR}>INR</MenuItem>
-              </Select>
-            </FormControl>
+              />
+              <Typography variant="body1" align="left" marginBottom={1}>
+                PASSWORD
+              </Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                placeholder="PASSWORD"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+                sx={{
+                  mb: 2,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        sx={{ color: "white" }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Typography variant="body1" align="left" marginBottom={1}>
+                CURRENCY
+              </Typography>
+              <FormControl fullWidth>
+                <Select
+                  value={formData.currency}
+                  name="currency"
+                  onChange={handleCurrencyChange}
+                  sx={{
+                    borderRadius: 6,
+                    backgroundColor: "#051737",
+                    color: "white",
+                    textAlign: "left",
+                    justifyContent: "flex-start",
+                    "& .MuiSelect-icon": {
+                      color: "white", // Set the dropdown arrow color to white
+                    },
+                  }}
+                  displayEmpty
+                >
+                  <MenuItem value={Currency.USD}>USD</MenuItem>
+                  <MenuItem value={Currency.EUR}>EUR</MenuItem>
+                  <MenuItem value={Currency.INR}>INR</MenuItem>
+                </Select>
+              </FormControl>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.agreedToTerms}
-                  onChange={handleCheckboxChange}
-                  sx={{ color: "white", "&.Mui-checked": { color: "#FF3366" } }}
-                />
-              }
-              label={
-                <Typography variant="body2">
-                  I AGREE TO THE{" "}
-                  <Typography
-                    color="yellow"
-                    sx={{ cursor: "pointer", display: "inline-block" }}
-                  >
-                    TERMS AND CONDITIONS
+              <FormControlLabel
+                sx={{ mb: 2, width: "100%" }}
+                control={
+                  <Checkbox
+                    checked={formData.agreedToTerms}
+                    onChange={handleCheckboxChange}
+                    sx={{
+                      color: "white",
+                      "&.Mui-checked": { color: "#FF3366" },
+                    }}
+                  />
+                }
+                label={
+                  <Typography variant="body1">
+                    I AGREE TO THE{" "}
+                    <Typography
+                      variant="body1"
+                      color="yellow"
+                      sx={{ cursor: "pointer", display: "inline-block" }}
+                    >
+                      TERMS AND CONDITIONS
+                    </Typography>
                   </Typography>
-                </Typography>
-              }
-            />
+                }
+              />
 
-            <Button fullWidth type="submit" variant="contained" color="error">
-              REGISTER
-            </Button>
-          </form>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="error"
+                title="Click to Register"
+              >
+                REGISTERATION
+              </Button>
+            </form>
+          </Box>
         </Box>
       </Box>
       <ThankYouModal

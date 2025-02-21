@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -27,12 +27,23 @@ const UserLogin: React.FC = () => {
     message: "",
     isError: false,
   });
-  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [emailOrPhone, setEmailOrPhone] = useState(
+    localStorage.getItem("rememberedEmail") || ""
+  );
+  const [rememberMe, setRememberMe] = useState(
+    localStorage.getItem("rememberedEmail") ? true : false
+  );
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
+  useEffect(() => {
+    if (!rememberMe) {
+      localStorage.removeItem("rememberedEmail");
+    }
+  }, [rememberMe]);
   const handleLogin = async () => {
     try {
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
@@ -60,6 +71,10 @@ const UserLogin: React.FC = () => {
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user));
 
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", emailOrPhone);
+        }
+
         setNotification({
           show: true,
           message: "Login successful!",
@@ -68,7 +83,8 @@ const UserLogin: React.FC = () => {
 
         setTimeout(() => {
           navigate("/home");
-        }, 1500);
+          window.location.reload();
+        }, 1000);
       } else {
         throw new Error(data.error || "Login failed. Please try again.");
       }
@@ -76,6 +92,15 @@ const UserLogin: React.FC = () => {
       setNotification({ show: true, message: error.message, isError: true });
     }
   };
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRememberMe(event.target.checked);
+    if (event.target.checked) {
+      localStorage.setItem("rememberedEmail", emailOrPhone);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+    }
+  };
+
   const handleGoogleLogin = () => {
     sessionStorage.setItem("redirectUrl", window.location.href);
     window.location.href = `${API_URL}/google`;
@@ -90,7 +115,7 @@ const UserLogin: React.FC = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -113,12 +138,11 @@ const UserLogin: React.FC = () => {
       </Snackbar>
       <Box
         sx={{
-          position: "absolute",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "90%",
-          maxWidth: 500,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: 600,
           borderRadius: 3,
           boxShadow: 24,
           p: 3,
@@ -127,122 +151,133 @@ const UserLogin: React.FC = () => {
         }}
       >
         {" "}
-        <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
-          LOGIN{" "}
-        </Typography>
-        <Box
-          sx={{
-            bgcolor: "#102A4E",
-            border: "2px solid #FF3366",
-            borderRadius: 3,
-            boxShadow: 24,
-            p: 3,
-            textAlign: "center",
-            color: "white",
-          }}
-        >
-          <Typography variant="body1" align="left" marginBottom={1}>
-            PHONE NUMBER OR EMAIL
+        <Box>
+          <Typography variant="h5" fontWeight="bold" color="white" mb={2}>
+            LOGIN{" "}
           </Typography>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="PHONE NUMBER OR EMAIL"
-            value={emailOrPhone}
-            onChange={(e) => setEmailOrPhone(e.target.value)}
-            sx={{ marginBottom: "12px" }}
-          />
-          <Typography variant="body1" align="left" marginBottom={1}>
-            PASSWORD
-          </Typography>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="PASSWORD"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleClickShowPassword}
-                    sx={{ color: "white" }}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            marginTop={2}
+            sx={{
+              width: "100%",
+              minWidth: { xs: "unset", md: 600 },
+              mx: "auto",
+              p: 3,
+              px: { xs: 3, md: 10 },
+              bgcolor: "#102A4E",
+              borderRadius: 3,
+              boxShadow: 3,
+              textAlign: "center",
+              color: "white",
+              border: "2px solid #FF3366",
+            }}
           >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  sx={{ color: "white", "&.Mui-checked": { color: "#FF3366" } }}
-                />
-              }
-              label={
-                <Typography sx={{ color: "white" }}>Remember Me</Typography>
-              }
+            <Typography variant="body1" align="left" marginBottom={1}>
+              PHONE NUMBER OR EMAIL
+            </Typography>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="PHONE NUMBER OR EMAIL"
+              value={emailOrPhone}
+              onChange={(e) => setEmailOrPhone(e.target.value)}
+              sx={{ marginBottom: "12px" }}
             />
-            <Typography
-              color="yellow"
-              sx={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/reset-password");
+            <Typography variant="body1" align="left" marginBottom={1}>
+              PASSWORD
+            </Typography>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="PASSWORD"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      sx={{ color: "white" }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
+            />
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              Forgot Password?
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={rememberMe}
+                    onChange={handleCheckboxChange}
+                    sx={{
+                      color: "white",
+                      "&.Mui-checked": { color: "#FF3366" },
+                    }}
+                  />
+                }
+                label={
+                  <Typography sx={{ color: "white" }}>Remember Me</Typography>
+                }
+              />
+              <Typography
+                color="yellow"
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/reset-password");
+                }}
+              >
+                Forgot Password?
+              </Typography>
+            </Box>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 2,
+                mb: 2,
+                background: "linear-gradient(to right, #d32f2f, #ff0000)",
+                color: "white",
+                fontWeight: "bold",
+                borderRadius: 6,
+              }}
+              onClick={handleLogin}
+              title="Log In"
+            >
+              LOG IN
+            </Button>
+            <Box display="flex" justifyContent="center" gap={2} mt={1}>
+              <IconButton onClick={handleFacebookLogin}>
+                <Avatar
+                  src={facebookIcon}
+                  alt="Facebook"
+                  sx={{ width: 24, height: 24 }}
+                />
+              </IconButton>
+              <IconButton onClick={handleGoogleLogin}>
+                <Avatar
+                  src={googleIcon}
+                  alt="Google"
+                  sx={{ width: 24, height: 24 }}
+                />
+              </IconButton>
+            </Box>
+            <Typography mt={2} color="gray">
+              DON'T HAVE AN ACCOUNT?{" "}
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/register");
+                }}
+              >
+                REGISTER
+              </span>
             </Typography>
           </Box>
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 2,
-              mb: 2,
-              background: "linear-gradient(to right, #d32f2f, #ff0000)",
-              color: "white",
-              fontWeight: "bold",
-              borderRadius: 6,
-            }}
-            onClick={handleLogin}
-          >
-            LOG IN
-          </Button>
-          <Box display="flex" justifyContent="center" gap={2} mt={2}>
-            <IconButton onClick={handleFacebookLogin}>
-              <Avatar
-                src={facebookIcon}
-                alt="Facebook"
-                sx={{ width: 24, height: 24 }}
-              />
-            </IconButton>
-            <IconButton onClick={handleGoogleLogin}>
-              <Avatar
-                src={googleIcon}
-                alt="Google"
-                sx={{ width: 24, height: 24 }}
-              />
-            </IconButton>
-          </Box>
-          <Typography mt={2} color="gray">
-            DON'T HAVE AN ACCOUNT?{" "}
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={() => {
-                navigate("/register");
-              }}
-            >
-              REGISTER
-            </span>
-          </Typography>
         </Box>
       </Box>
     </Box>

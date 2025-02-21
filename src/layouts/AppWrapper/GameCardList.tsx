@@ -53,27 +53,27 @@ const GameCard: React.FC<GameCardProps> = ({
             {description}
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
-            <Button variant="contained" color="error">
+            <Button variant="contained" color="error" title="Play">
               Play
             </Button>
             <Typography variant="body2" sx={{ color: "#FFF" }}>
               4654
             </Typography>
-            <AvatarGroup spacing={24}>
+            <AvatarGroup spacing={14}>
               <Avatar
                 alt="Remy Sharp"
                 src={profileImg}
-                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+                sx={{ width: 24, height: 24 }} // Reduces the size of the avatar
               />
               <Avatar
                 alt="Remy Sharp"
                 src={profileImg}
-                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+                sx={{ width: 24, height: 24 }} // Reduces the size of the avatar
               />
               <Avatar
                 alt="Remy Sharp"
                 src={profileImg}
-                sx={{ width: 30, height: 30 }} // Reduces the size of the avatar
+                sx={{ width: 24, height: 24 }} // Reduces the size of the avatar
               />
             </AvatarGroup>
           </Box>
@@ -119,25 +119,31 @@ const GameCardList = () => {
     autoplay: false,
     autoplaySpeed: 3000,
     arrows: true,
-    slidesToShow: 3, // Default
+    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: "60px",
 
     responsive: [
       {
-        breakpoint: 1200, // Below 1200px
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
+          centerPadding: "15px",
         },
       },
       {
         breakpoint: 991,
         settings: {
           slidesToShow: 1,
+          centerMode: true,
+          centerPadding: "25%",
         },
       },
       {
-        breakpoint: 600, // Below 600px
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
+          centerMode: true,
         },
       },
     ],
@@ -155,7 +161,7 @@ const GameCardList = () => {
         {games.map((game, index) => (
           <Box
             key={index}
-            sx={{ display: "flex", justifyContent: "center", p: 1 }}
+            sx={{ display: "flex", justifyContent: "center", p: 1, mt: 2 }}
           >
             <GameCard {...game} />
           </Box>

@@ -29,7 +29,11 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [notification, setNotification] = useState({ show: false, message: "", isError: false });
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    isError: false,
+  });
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -179,7 +183,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         >
           <Alert
             severity={notification.isError ? "error" : "success"}
-            onClose={() => setNotification((prev) => ({ ...prev, show: false }))}
+            onClose={() =>
+              setNotification((prev) => ({ ...prev, show: false }))
+            }
           >
             {notification.message}
           </Alert>

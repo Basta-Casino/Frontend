@@ -14,7 +14,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   setPage,
 }) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
       <Pagination
         count={count}
         page={page}

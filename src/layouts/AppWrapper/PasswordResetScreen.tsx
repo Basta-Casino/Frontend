@@ -8,7 +8,7 @@ const PasswordResetScreen: React.FC = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -56,6 +56,7 @@ const PasswordResetScreen: React.FC = () => {
         {/* Reset Button */}
         <Button
           variant="contained"
+          title="Reset"
           sx={{
             borderRadius: "20px",
             background: "linear-gradient(45deg, #e52d27, #b31217)",

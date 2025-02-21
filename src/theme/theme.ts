@@ -1,17 +1,14 @@
 import { createTheme } from "@mui/material/styles";
 
-// Extend Typography to recognize body3
 declare module "@mui/material/styles" {
   interface TypographyVariants {
     body3: React.CSSProperties;
   }
-
   interface TypographyVariantsOptions {
     body3?: React.CSSProperties;
   }
 }
 
-// Allow usage of `variant="body3"` in Typography components
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     body3: true;
@@ -117,12 +114,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            overflow: "hidden", // ✅ Fix border-radius clipping issues
+            overflow: "hidden",
             borderRadius: "48px",
             backgroundColor: "#051737",
             color: "white",
             "& .MuiInputBase-input": {
-              color: "white", // Ensures text inside the input is white
+              color: "white",
+              textAlign: "left",
             },
             "& fieldset": {
               borderColor: "#051737",
@@ -135,13 +133,17 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "20px",
-          textTransform: "none", // Optional: Prevents uppercase text
+          textTransform: "none",
+          "&.Mui-disabled": {
+            backgroundColor: "#8080804D",
+            color: "#FFFFFF80", 
+          },
         },
         containedPrimary: {
           backgroundColor: "#FFFFFF1A",
           color: "white",
           "&:hover": {
-            backgroundColor: "#152744", // Darker shade on hover
+            backgroundColor: "#152744",
           },
         },
         outlinedPrimary: {
@@ -149,12 +151,19 @@ const theme = createTheme({
           color: "white",
           backgroundColor: "transparent",
           "&:hover": {
-            backgroundColor: "#152744", // Light transparent effect
+            backgroundColor: "#152744",
           },
         },
       },
+      defaultProps: {
+        title: "Button", 
+      },
     },
-    
+    MuiPopover: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
   },
 });
 

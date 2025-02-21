@@ -1,35 +1,51 @@
-import { useState, useEffect, SetStateAction } from "react";
-import { Box, Button, Stack, Menu, MenuItem } from "@mui/material";
+import { useState } from "react";
+import {
+  Box,
+  Button,
+  Stack,
+  Menu,
+  MenuItem,
+  Avatar,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../../../assets/logo-icons/logo.png";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { useModal } from "../../../services/ModalControl/index";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../../assets/logo-icons/logo.png";
+import profileImg from "../../../assets/dummy-profile.png";
+import BastaImg from "../../../assets/logo-icons/basta-coin.png";
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [user, setUser] = useState(null);
-  const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [anchorElTopUp, setAnchorElTopUp] = useState<HTMLElement | null>(null);
+  const [anchorElProfile, setAnchorElProfile] = useState<HTMLElement | null>(
+    null
+  );
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        setUser(null);
-      }
-    }
-  }, []);
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget as HTMLButtonElement | null);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleTopUpClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElTopUp(event.currentTarget);
+  };
+
+  const handleProfileClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorElProfile(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorElTopUp(null);
+    setAnchorElProfile(null);
   };
 
   const handleLogout = () => {
@@ -38,8 +54,6 @@ const Navbar = () => {
     setUser(null);
     navigate("/login");
   };
-
-  const { setOpenThankYou } = useModal();
 
   return (
     <Box
@@ -56,6 +70,7 @@ const Navbar = () => {
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
+        {/* Logo */}
         <Link to="/home">
           <Box
             component="img"
@@ -64,29 +79,107 @@ const Navbar = () => {
             sx={{ height: 40, cursor: "pointer" }}
           />
         </Link>
+
+        {/* Desktop Menu */}
         <Stack
           direction="row"
           spacing={2}
           sx={{ display: { xs: "none", md: "flex" } }}
+          alignItems="center"
         >
           {user ? (
-            <>
-              <Button onClick={handleClick} color="inherit">
-                Menu
-              </Button>
-              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={() => navigate("/profile")}>
-                  Profile
-                </MenuItem>
+            <Box
+              display="flex"
+              alignItems="center"
+              sx={{
+                gap: { xs: 2, md: 30 },
+              }}
+            >
+              {/* Top Up Section */}
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{
+                  backgroundColor: "#FEFEFE12",
+                  p: 1,
+                  borderRadius: "30px",
+                }}
+              >
+                <Box
+                  component="img"
+                  src={BastaImg}
+                  alt="coin"
+                  width={20}
+                  height={20}
+                />
+                <Typography
+                  variant="body2"
+                  mx={1}
+                  color="white"
+                  sx={{ textAlign: "center" }}
+                >
+                  1000022.00
+                </Typography>
+                <IconButton
+                  onClick={handleTopUpClick}
+                  size="small"
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#0000002B",
+                    borderRadius: "30px",
+                    padding: "5px 10px",
+                    fontSize: "7px",
+                    marginRight: "5px",
+                  }}
+                >
+                  BKC <ExpandMoreIcon sx={{ fontSize: "10px" }} />
+                </IconButton>
+
+                <Menu
+                  anchorEl={anchorElTopUp}
+                  open={Boolean(anchorElTopUp)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>BKC</MenuItem>
+                  <MenuItem onClick={handleClose}>ETH</MenuItem>
+                  <MenuItem onClick={handleClose}>BTC</MenuItem>
+                </Menu>
+
+                <Button variant="contained" color="error" title="top up">
+                  Top Up
+                </Button>
+              </Box>
+
+              {/* User Profile */}
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ cursor: "pointer" }}
+                onClick={handleProfileClick}
+              >
+                <Avatar src={profileImg} />
+                <Typography mx={1} color="white">
+                  PLAYER86718
+                </Typography>
+                <ExpandMoreIcon sx={{ color: "white" }} />
+              </Box>
+
+              <Menu
+                anchorEl={anchorElProfile}
+                open={Boolean(anchorElProfile)}
+                onClose={handleClose}
+              >
+                <MenuItem>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
-            </>
+            </Box>
           ) : (
             <>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={() => navigate("/login")}
+                title="Log in"
               >
                 Login
               </Button>
@@ -94,14 +187,18 @@ const Navbar = () => {
                 variant="contained"
                 color="error"
                 onClick={() => navigate("/register")}
+                title="Register"
               >
                 Register
               </Button>
             </>
           )}
+
+          {/* Help Button */}
           <Button
             variant="outlined"
             color="inherit"
+            title="Help"
             sx={{
               borderColor: "yellow",
               color: "yellow",
@@ -113,17 +210,22 @@ const Navbar = () => {
                 backgroundColor: "rgba(255, 255, 0, 0.1)",
               },
             }}
-            onClick={() => setOpenThankYou(true)}
           >
             <HelpOutlineIcon sx={{ fontSize: 18, color: "yellow" }} />
             Help
           </Button>
         </Stack>
+
+        {/* Mobile Menu */}
         <Box sx={{ display: { xs: "block", md: "none" } }}>
           <Button onClick={handleClick} color="inherit">
             <MenuIcon sx={{ fontSize: 28 }} />
           </Button>
-          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
             {user ? (
               <>
                 <MenuItem onClick={() => navigate("/profile")}>

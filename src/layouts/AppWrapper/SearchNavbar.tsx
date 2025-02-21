@@ -42,6 +42,7 @@ const SearchNavbar: React.FC = () => {
           color="primary"
           sx={{ display: { xs: "none", sm: "inline-flex" } }}
           onClick={handleMenuOpen}
+          title="All Providers"
         >
           All providers
         </Button>
@@ -55,12 +56,22 @@ const SearchNavbar: React.FC = () => {
         </Menu>
 
         {/* First Button */}
-        <Button variant="contained" color="error" style={{ marginLeft: 10 }}>
+        <Button
+          variant="contained"
+          title="Hit"
+          color="error"
+          style={{ marginLeft: 10 }}
+        >
           Hit
         </Button>
 
         {/* Second Button */}
-        <Button variant="contained" color="primary" style={{ marginLeft: 10 }}>
+        <Button
+          variant="contained"
+          title="New"
+          color="primary"
+          style={{ marginLeft: 10 }}
+        >
           New
         </Button>
 

@@ -39,7 +39,6 @@ const PasswordReset: React.FC = () => {
       setTimeout(() => {
         navigate("/reset-new-password");
       }, 2000);
-
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -80,8 +79,16 @@ const PasswordReset: React.FC = () => {
           PASSWORD RESET
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-        {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            {success}
+          </Alert>
+        )}
 
         <Box
           sx={{
@@ -95,10 +102,11 @@ const PasswordReset: React.FC = () => {
             minWidth: { xs: "unset", md: "500px" },
           }}
         >
-          <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <Box gap={1} mb={2}>
             <Typography
-              variant="body2"
+              variant="body1"
               color="white"
+              mb={1}
               sx={{ whiteSpace: "nowrap" }}
             >
               PHONE OR EMAIL
@@ -113,7 +121,7 @@ const PasswordReset: React.FC = () => {
                 flexGrow: 1,
                 "& .MuiOutlinedInput-root": {
                   color: "white",
-                }
+                },
               }}
             />
           </Box>
@@ -124,6 +132,7 @@ const PasswordReset: React.FC = () => {
             onClick={handleReset}
             disabled={loading || !contact}
             sx={{ width: "100%" }}
+            title="Click to reset"
           >
             {loading ? "PROCESSING..." : "RESET PASSWORD"}
           </Button>

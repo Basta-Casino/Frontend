@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, CircularProgress, Button } from "@mui/material";
-import { useSearchParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../constants/api";
 import Gamesbg from "../../assets/games-bg.png";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 interface Props {
   navigation?: string | number;
   buttonText?: string;
@@ -117,6 +117,7 @@ const VerifyEmail: React.FC<Props> = () => {
           </>
         ) : verificationState.isVerified ? (
           <>
+            <CheckCircleOutlineIcon color="success" sx={{ fontSize: 60 }} />
             <Typography variant="h4" color="white" sx={{ mb: 2 }}>
               Email Verified!
             </Typography>
@@ -131,23 +132,14 @@ const VerifyEmail: React.FC<Props> = () => {
                 gap: 1,
               }}
             >
-              {" "}
-              Your email has been successfully verified. You can now login to
-              your account.
+              Your email address was successfully verified.
             </Typography>
-            {/* Conditionally render the button */}
             {isModalContextReady && (
               <Button
                 variant="contained"
-                color="primary"
+                color="error"
                 onClick={handleLoginClick}
-                sx={{
-                  mt: 2,
-                  backgroundColor: "#FF3366",
-                  "&:hover": {
-                    backgroundColor: "#FF1F5A",
-                  },
-                }}
+                title="Login Now"
               >
                 Login Now
               </Button>
@@ -164,6 +156,8 @@ const VerifyEmail: React.FC<Props> = () => {
                 width: "100%",
               }}
             >
+              <ErrorOutlineIcon color="error" sx={{ fontSize: 60 }} />
+
               <Typography variant="h4" color="error" sx={{ mb: 2 }}>
                 Verification Failed
               </Typography>
@@ -179,9 +173,6 @@ const VerifyEmail: React.FC<Props> = () => {
                     gap: 1,
                   }}
                 >
-                  {verificationState.error.includes("token") && (
-                    <ErrorOutlineIcon />
-                  )}
                   {verificationState.error}
                 </Typography>
               )}

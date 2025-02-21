@@ -62,6 +62,7 @@ const CasinoBanner: React.FC = () => {
             padding: "10px",
             borderRadius: "30px",
             display: "inline-block",
+            marginBottom: "30px",
           }}
         >
           <Typography
@@ -94,6 +95,7 @@ const CasinoBanner: React.FC = () => {
           <Button
             variant="contained"
             color="error"
+            title="Play"
             // startIcon={<CasinoIcon />}
           >
             PLAY

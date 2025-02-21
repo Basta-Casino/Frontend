@@ -54,10 +54,9 @@ const PasswordResetNew: React.FC = () => {
 
       setSuccess("Password reset successful! Redirecting to login...");
 
-     setTimeout(()=>{
-      navigate("/login");
-     },2000);
-      
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -98,8 +97,16 @@ const PasswordResetNew: React.FC = () => {
           PASSWORD RESET
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-        {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            {success}
+          </Alert>
+        )}
         <Box
           sx={{
             backgroundColor: "#102A4E",
@@ -112,9 +119,9 @@ const PasswordResetNew: React.FC = () => {
             minWidth: { xs: "unset", md: "500px" },
           }}
         >
-          <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <Box gap={1} mb={2}>
             <Typography
-              variant="body2"
+              variant="body1"
               color="white"
               sx={{ whiteSpace: "nowrap" }}
             >
@@ -148,15 +155,8 @@ const PasswordResetNew: React.FC = () => {
             variant="contained"
             onClick={handleResetPassword}
             disabled={loading || !password}
-            sx={{
-              borderRadius: "20px",
-              background: "linear-gradient(45deg, #e52d27, #b31217)",
-              color: "white",
-              fontWeight: "bold",
-              "&:hover": {
-                background: "linear-gradient(45deg, #b31217, #e52d27)",
-              },
-            }}
+            color="error"
+            title="Reset Password"
           >
             {loading ? "PROCESSING..." : "RESET PASSWORD"}
           </Button>

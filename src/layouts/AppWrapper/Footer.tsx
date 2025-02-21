@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Container, Typography, IconButton } from "@mui/material";
-import { Facebook, Instagram, YouTube, Close } from "@mui/icons-material";
 import VisaImg from "../../assets/footerImg1.png";
 import MastercardImg from "../../assets/footerImg2.png";
 import SkrillImg from "../../assets/footerImg3.png";
@@ -9,6 +8,10 @@ import VWImg from "../../assets/footerImg6.png";
 import ScrillImg from "../../assets/footerImg5.png";
 import EpImg from "../../assets/18plus.png";
 import GcbImg from "../../assets/footerImgGcb.png";
+import fbIcon from "../../assets/logo-icons/fb-icon.png";
+import instaIcon from "../../assets/logo-icons/insta-icon.png";
+import TwitterIcon from "../../assets/logo-icons/twitter-icon.png";
+import ytIcon from "../../assets/logo-icons/yt-icon.png";
 
 // Sample payment method logos (Replace with real assets)
 const paymentMethods = [
@@ -26,6 +29,22 @@ const footerLinks = [
   "Terms and Conditions",
   "Sports Betting Policy",
   "Responsible Gambling",
+];
+const socialLinks = [
+  {
+    icon: <img src={fbIcon} alt="fbIcon" title="Facebook" width="24px" />,
+  },
+  {
+    icon: (
+      <img src={instaIcon} alt="instaIcon" title="Instagram" width="24px" />
+    ),
+  },
+  {
+    icon: <img src={ytIcon} alt="ytIcon" title="Youtube" width="24px" />,
+  },
+  {
+    icon: <img src={TwitterIcon} alt="TwitterIcon" title="X" width="24px" />,
+  },
 ];
 
 const Footer: React.FC = () => {
@@ -61,19 +80,16 @@ const Footer: React.FC = () => {
             ))}
           </Box>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {/* Social Media Icons */}
-            <IconButton sx={{ color: "#fff" }}>
-              <Facebook />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <Instagram />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <YouTube />
-            </IconButton>
-            <IconButton sx={{ color: "#fff" }}>
-              <Close />
-            </IconButton>
+            {socialLinks.map((social, index) => (
+              <IconButton
+                key={index}
+                sx={{ color: "#fff" }}
+                component="a"
+                target="_blank"
+              >
+                {social.icon}
+              </IconButton>
+            ))}
           </Box>
         </Box>
         {/* Payment Methods */}
