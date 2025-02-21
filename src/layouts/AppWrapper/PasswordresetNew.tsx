@@ -6,12 +6,64 @@ import {
   Typography,
   IconButton,
   InputAdornment,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Gamesbg from "../../assets/games-bg.png";
+import { useNavigate, useLocation } from "react-router-dom";
+import { API_URL } from "../../constants/api";
 
 const PasswordResetNew: React.FC = () => {
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token");
+
+  const handleResetPassword = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      setSuccess("");
+
+      if (!token) {
+        throw new Error("Reset token is missing");
+      }
+
+      const response = await fetch(`${API_URL}/reset-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to reset password");
+      }
+
+      setSuccess("Password reset successful! Redirecting to login...");
+
+     setTimeout(()=>{
+      navigate("/login");
+     },2000);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box
@@ -46,6 +98,8 @@ const PasswordResetNew: React.FC = () => {
           PASSWORD RESET
         </Typography>
 
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
         <Box
           sx={{
             backgroundColor: "#102A4E",
@@ -70,8 +124,11 @@ const PasswordResetNew: React.FC = () => {
               fullWidth
               type={showPassword ? "text" : "password"}
               variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter new password"
               InputProps={{
-                style: { color: "white" }, // Set input text color
+                style: { color: "white" },
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
@@ -89,6 +146,8 @@ const PasswordResetNew: React.FC = () => {
 
           <Button
             variant="contained"
+            onClick={handleResetPassword}
+            disabled={loading || !password}
             sx={{
               borderRadius: "20px",
               background: "linear-gradient(45deg, #e52d27, #b31217)",
@@ -99,7 +158,7 @@ const PasswordResetNew: React.FC = () => {
               },
             }}
           >
-            RESET PASSWORD
+            {loading ? "PROCESSING..." : "RESET PASSWORD"}
           </Button>
         </Box>
       </Box>

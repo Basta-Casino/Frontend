@@ -1,10 +1,51 @@
-import React from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, TextField, Button, Typography, Alert } from "@mui/material";
 import Gamesbg from "../../assets/games-bg.png";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../constants/api";
 
 const PasswordReset: React.FC = () => {
   const navigate = useNavigate();
+  const [contact, setContact] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleReset = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      setSuccess("");
+
+      // Determine if input is email or phone
+      const isEmail = contact.includes("@");
+      const payload = isEmail ? { email: contact } : { phone_number: contact };
+
+      const response = await fetch(`${API_URL}/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to reset password");
+      }
+
+      setSuccess(data.message);
+      setTimeout(() => {
+        navigate("/reset-new-password");
+      }, 2000);
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box
@@ -39,6 +80,9 @@ const PasswordReset: React.FC = () => {
           PASSWORD RESET
         </Typography>
 
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+
         <Box
           sx={{
             backgroundColor: "#102A4E",
@@ -62,9 +106,14 @@ const PasswordReset: React.FC = () => {
             <TextField
               fullWidth
               variant="outlined"
-              // placeholder="ENTER PHONE OR EMAIL"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              placeholder="Enter your email or phone number"
               sx={{
                 flexGrow: 1,
+                "& .MuiOutlinedInput-root": {
+                  color: "white",
+                }
               }}
             />
           </Box>
@@ -72,9 +121,11 @@ const PasswordReset: React.FC = () => {
           <Button
             variant="contained"
             color="error"
-            onClick={() => navigate("/reset-new-password")}
+            onClick={handleReset}
+            disabled={loading || !contact}
+            sx={{ width: "100%" }}
           >
-            RESET PASSWORD
+            {loading ? "PROCESSING..." : "RESET PASSWORD"}
           </Button>
         </Box>
       </Box>
