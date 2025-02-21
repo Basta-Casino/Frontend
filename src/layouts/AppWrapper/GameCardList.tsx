@@ -35,8 +35,8 @@ const GameCard: React.FC<GameCardProps> = ({
         background: "linear-gradient(to bottom, #0A0F24, #16243D)",
         borderRadius: "12px",
         padding: "12px",
-        minWidth: 300,
-        maxWidth: 350,
+        minWidth: { xs: 250, sm: 280, md: 300 }, // Responsive min-width
+        maxWidth: { xs: 280, sm: 320, md: 350 }, // Responsive max-width
         border: `2px solid ${borderColor}`,
         boxShadow: "0px 4px 10px rgba(255, 255, 255, 0.1)",
         display: "flex",
@@ -146,7 +146,6 @@ const GameCardList = () => {
   return (
     <Box
       sx={{
-        // maxWidth: 350,
         mx: "auto",
         position: "relative",
         overflow: "hidden",

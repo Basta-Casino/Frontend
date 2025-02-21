@@ -37,7 +37,12 @@ const SearchNavbar: React.FC = () => {
     >
       <Toolbar>
         {/* Dropdown Button */}
-        <Button variant="contained" color="primary" onClick={handleMenuOpen}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ display: { xs: "none", sm: "inline-flex" } }}
+          onClick={handleMenuOpen}
+        >
           All providers
         </Button>
         <Menu
@@ -50,17 +55,22 @@ const SearchNavbar: React.FC = () => {
         </Menu>
 
         {/* First Button */}
-        <Button variant="contained" color="error" style={{ marginLeft: 20 }}>
+        <Button variant="contained" color="error" style={{ marginLeft: 10 }}>
           Hit
         </Button>
 
         {/* Second Button */}
-        <Button variant="contained" color="primary" style={{ marginLeft: 20 }}>
+        <Button variant="contained" color="primary" style={{ marginLeft: 10 }}>
           New
         </Button>
 
         {/* Align Search Bar to the Right */}
-        <Box display="flex" justifyContent="flex-end" style={{ flexGrow: 1 }}>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          marginLeft={1}
+          style={{ flexGrow: 1 }}
+        >
           <TextField
             variant="outlined"
             size="small"
@@ -69,13 +79,13 @@ const SearchNavbar: React.FC = () => {
             placeholder="Search..."
             sx={{
               ".MuiOutlinedInput-root": {
-                backgroundColor: "#FFFFFF1A", // background color for the input
+                backgroundColor: "#FFFFFF1A",
               },
               ".MuiOutlinedInput-input": {
-                color: "white", // optional text color change
+                color: "white",
               },
               ".MuiOutlinedInput-adornedStart": {
-                paddingLeft: "10px", // optional padding for the icon
+                paddingLeft: "10px",
               },
             }}
             InputProps={{

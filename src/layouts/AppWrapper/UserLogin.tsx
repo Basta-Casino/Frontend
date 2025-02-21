@@ -54,10 +54,11 @@ const UserLogin: React.FC = () => {
       });
 
       const data = await response.json();
+      console.log("data", data);
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
 
         setNotification({
           show: true,

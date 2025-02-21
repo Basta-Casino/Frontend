@@ -44,8 +44,8 @@ const GameCard: React.FC<GameCardProps> = ({ title, image }) => {
       sx={{
         background: "linear-gradient(to bottom, #0A0F24, #16243D)",
         borderRadius: "12px",
-        width: 200, // Ensure uniform width
-        height: 200, // Fixed height for consistency
+        width: { xs: 100, sm: 120, md: 200 },
+        height: { xs: 100, sm: 120, md: 200 },
         boxShadow: "0px 4px 10px rgba(255, 255, 255, 0.1)",
         position: "relative",
         overflow: "hidden",
@@ -196,11 +196,14 @@ const GameCardList = () => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gridTemplateColumns: {
+            xs: "repeat(auto-fill, minmax(100px, 1fr))",
+            md: "repeat(auto-fill, minmax(200px, 1fr))",
+          },
           gap: 2,
           justifyContent: "center",
           padding: 2,
-          minHeight: "400px", // Set a minimum height to prevent content shift
+          minHeight: "400px",
         }}
       >
         {games.map((game) => (
