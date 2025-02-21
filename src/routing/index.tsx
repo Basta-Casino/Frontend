@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import RootWrapper from "../layouts/RootWrapper";
 import DefaultWrapper from "../layouts/DefaultWrapper";
 import lazyLoad from "../layouts/lazyLoader";
@@ -16,7 +16,13 @@ const RootRoutes = createBrowserRouter([
       {
         path: "/",
         element: <DefaultWrapper />,
-        children: baseroutes,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/home" replace />
+          },
+          ...baseroutes
+        ],
       },
       {
         path: "games",
